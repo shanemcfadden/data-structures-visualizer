@@ -4,5 +4,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/data-structures-visualizer",
   plugins: [react(), tailwindcss()],
 });
