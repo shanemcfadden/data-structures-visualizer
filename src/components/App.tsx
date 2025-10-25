@@ -1,3 +1,14 @@
-export const App = () => (
-  <h1 className="text-center text-xl">Hello boilerplate</h1>
-);
+import { Container } from "./Container";
+import { LinkedListView } from "../views/LinkedListView";
+import { Heading } from "./Heading";
+
+export const App = () => {
+  return (
+    <Container>
+      <Heading level={1} textCenter>
+        Data Structures Visualizer
+      </Heading>
+      <LinkedListView />
+    </Container>
+  );
+};
