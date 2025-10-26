@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { LinkedListContext } from "../state/LinkedListContext";
 import { Append } from "./Append";
 import { Prepend } from "./Prepend";
 import { RemoveFirst } from "./RemoveFirst";
 import { RemoveLast } from "./RemoveLast";
 import { Margin } from "../../../components/Margin";
 import { Heading } from "../../../components/Heading";
+import { LinkedListContext } from "../state/context";
 
 export const LinkedListDashboard = () => {
   const { head, list, tail } = useContext(LinkedListContext);

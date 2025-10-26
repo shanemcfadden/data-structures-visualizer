@@ -1,22 +1,7 @@
-import {
-  createContext,
-  useReducer,
-  type ActionDispatch,
-  type PropsWithChildren,
-} from "react";
-import {
-  linkedListReducer,
-  linkedListToState,
-  type LinkedListAction,
-} from "./reducer";
-import { LinkedList } from "../../../models/linked-list";
-
-const initializeState = () => linkedListToState(new LinkedList());
-
-export const LinkedListContext = createContext(initializeState());
-export const LinkedListDispatchContext = createContext<
-  ActionDispatch<[action: LinkedListAction]>
->(() => {});
+import { useReducer, type PropsWithChildren } from "react";
+import { linkedListReducer } from "./reducer";
+import { initializeState } from "./util";
+import { LinkedListContext, LinkedListDispatchContext } from "./context";
 
 export const LinkedListProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(
