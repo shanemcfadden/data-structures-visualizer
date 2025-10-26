@@ -1,6 +1,6 @@
 # data-structures-visualizer
 
-Work In Progress: A web application to visualize various data structures and algorithms.
+Work In Progress: A web application to visualize various data structures and algorithms. View site at [shanemcfadden.dev/data-structures-visualizer](https://shanemcfadden.dev/data-structures-visualizer).
 
 ## Tools Used:
 
