@@ -1,7 +1,7 @@
 import { useCallback, useContext } from "react";
-import { LinkedListDispatchContext } from "../state/LinkedListContext";
 import { Action } from "../../../components/Action";
 import { UP_TO_THREE_DIGITS_PATTERN } from "../../../constants";
+import { LinkedListDispatchContext } from "../state/context";
 
 export const Prepend = () => {
   const dispatch = useContext(LinkedListDispatchContext);

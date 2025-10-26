@@ -1,27 +1,7 @@
 import type { Reducer } from "react";
 import { LinkedList } from "../../../models/linked-list";
-
-export type LinkedListState = {
-  head: number | null;
-  tail: number | null;
-  list: number[];
-};
-
-export type LinkedListAction =
-  | {
-      type: "APPEND";
-      value: number;
-    }
-  | {
-      type: "PREPEND";
-      value: number;
-    }
-  | {
-      type: "REMOVE_FIRST";
-    }
-  | {
-      type: "REMOVE_LAST";
-    };
+import type { LinkedListAction, LinkedListState } from "./types";
+import { linkedListToState } from "./util";
 
 export const linkedListReducer: Reducer<LinkedListState, LinkedListAction> = (
   state,
@@ -44,11 +24,3 @@ export const linkedListReducer: Reducer<LinkedListState, LinkedListAction> = (
   }
   return linkedListToState(linkedList);
 };
-
-export const linkedListToState = (
-  linkedList: LinkedList<number>,
-): LinkedListState => ({
-  head: linkedList.head?.value ?? null,
-  tail: linkedList.tail?.value ?? null,
-  list: [...linkedList],
-});

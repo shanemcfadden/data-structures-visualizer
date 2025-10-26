@@ -26,14 +26,17 @@ export const Action = memo(
   }: ActionProps) => {
     const [inputValue, setInputValue] = useState<string>("");
 
-    const onChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
-      e.preventDefault();
+    const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+      (e) => {
+        e.preventDefault();
 
-      const { value } = e.target;
-      if (value.match(inputPattern)) {
-        setInputValue(e.target.value);
-      }
-    }, []);
+        const { value } = e.target;
+        if (value.match(inputPattern)) {
+          setInputValue(e.target.value);
+        }
+      },
+      [inputPattern],
+    );
 
     const onButtonClick: FormEventHandler<
       HTMLButtonElement | HTMLInputElement
@@ -43,7 +46,7 @@ export const Action = memo(
         onButtonClickRaw(inputValue);
         setInputValue("");
       },
-      [inputValue],
+      [inputValue, onButtonClickRaw],
     );
 
     const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(

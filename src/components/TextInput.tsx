@@ -12,15 +12,13 @@ export const TextInput = ({
   onKeyDown,
   placeholder,
   value,
-}: TextInputProps) => {
-  return (
-    <input
-      className="border border-gray rounded p-2"
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      placeholder={placeholder}
-      type="text"
-      value={value}
-    />
-  );
-};
+}: TextInputProps) => (
+  <input
+    className="border border-gray rounded p-2"
+    onChange={onChange}
+    onKeyDown={onKeyDown}
+    placeholder={placeholder}
+    type="text"
+    value={value}
+  />
+);
