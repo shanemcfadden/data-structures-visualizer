@@ -23,4 +23,4 @@ export const ArrowHead = () => (
 export const ARROW_HEAD_DEF_ID = "arrow";
 export const ARROW_HEAD_REF = `url(#${ARROW_HEAD_DEF_ID})`;
 
-export const ARROW_HEAD_LENGTH = 6;
+export const ARROW_HEAD_LENGTH = 8;
