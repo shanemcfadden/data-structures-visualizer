@@ -1,44 +1,16 @@
-import { useContext } from "react";
-import { Append } from "./Append";
-import { Prepend } from "./Prepend";
-import { RemoveFirst } from "./RemoveFirst";
-import { RemoveLast } from "./RemoveLast";
+import { LinkedListProperties } from "./LinkedListProperties";
+import { LinkedListMethods } from "./LinkedListMethods";
 import { Margin } from "../../../components/Margin";
-import { Heading } from "../../../components/Heading";
-import { LinkedListContext } from "../state/context";
 
-export const LinkedListDashboard = () => {
-  const { head, list, tail } = useContext(LinkedListContext);
-
-  return (
-    <div>
-      <div className="grid grid-cols-2">
-        <div>
-          <Heading collapseTopMargin level={3}>
-            Properties
-          </Heading>
-          <div>Head value: {head ?? "null"}</div>
-          <div>Tail value: {tail ?? "null"}</div>
-          <div>Length: {list.length}</div>
-        </div>
-        <div>
-          <Heading collapseTopMargin level={3}>
-            Methods
-          </Heading>
-          <Margin weight="small">
-            <Append />
-          </Margin>
-          <Margin weight="small">
-            <Prepend />
-          </Margin>
-          <Margin weight="small">
-            <div className="flex justify-between">
-              <RemoveFirst />
-              <RemoveLast />
-            </div>
-          </Margin>
-        </div>
-      </div>
+export const LinkedListDashboard = () => (
+  <Margin>
+    <div className="sm:hidden">
+      <LinkedListProperties />
+      <LinkedListMethods />
     </div>
-  );
-};
+    <div className="hidden sm:grid sm:grid-cols-2">
+      <LinkedListProperties collapseTopMargin />
+      <LinkedListMethods collapseTopMargin />
+    </div>
+  </Margin>
+);

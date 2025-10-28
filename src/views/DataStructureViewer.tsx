@@ -9,7 +9,7 @@ type DataStructureViewerProps = {
 };
 
 export const DataStructureViewer = ({ list }: DataStructureViewerProps) => {
-  const PADDING = 50;
+  const PADDING = 120;
 
   const numberOfCircles = list.length;
 
@@ -32,7 +32,7 @@ export const DataStructureViewer = ({ list }: DataStructureViewerProps) => {
     }),
   );
 
-  const CIRCLE_ARROW_PADDING = 5;
+  const CIRCLE_ARROW_PADDING = 12;
 
   const arrows = circles
     .reduce<{
