@@ -14,7 +14,7 @@ export const TextInput = ({
   value,
 }: TextInputProps) => (
   <input
-    className="border border-gray rounded p-2"
+    className="border border-gray rounded p-2 w-full"
     onChange={onChange}
     onKeyDown={onKeyDown}
     placeholder={placeholder}

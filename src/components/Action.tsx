@@ -61,12 +61,14 @@ export const Action = memo(
     return (
       <div className="flex justify-between">
         {input && (
-          <TextInput
-            placeholder={inputPlaceholder}
-            value={inputValue}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-          />
+          <div className="mr-4">
+            <TextInput
+              placeholder={inputPlaceholder}
+              value={inputValue}
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+            />
+          </div>
         )}
         <Button onSubmit={onButtonClick}>{label}</Button>
       </div>

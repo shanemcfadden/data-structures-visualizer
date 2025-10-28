@@ -1,9 +1,9 @@
 import { useCallback, useContext } from "react";
-import { Action } from "../../../components/Action";
-import { UP_TO_THREE_DIGITS_PATTERN } from "../../../constants";
-import { LinkedListDispatchContext } from "../state/context";
+import { Action } from "../../../../components/Action";
+import { UP_TO_THREE_DIGITS_PATTERN } from "../../../../constants";
+import { LinkedListDispatchContext } from "../../state/context";
 
-export const Prepend = () => {
+export const Append = () => {
   const dispatch = useContext(LinkedListDispatchContext);
 
   const onButtonClick = useCallback(
@@ -13,7 +13,7 @@ export const Prepend = () => {
       }
 
       dispatch({
-        type: "PREPEND",
+        type: "APPEND",
         value: +input,
       });
     },
@@ -25,7 +25,7 @@ export const Prepend = () => {
       input
       inputPattern={UP_TO_THREE_DIGITS_PATTERN}
       inputPlaceholder={"42"}
-      label="Prepend"
+      label="Append"
       onButtonClick={onButtonClick}
     />
   );
