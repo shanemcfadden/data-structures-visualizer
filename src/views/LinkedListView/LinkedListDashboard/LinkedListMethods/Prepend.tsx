@@ -23,6 +23,7 @@ export const Prepend = () => {
   return (
     <Action
       input
+      inputMode="numeric"
       inputPattern={UP_TO_THREE_DIGITS_PATTERN}
       inputPlaceholder={"42"}
       label="Prepend"

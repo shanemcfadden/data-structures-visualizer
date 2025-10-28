@@ -4,12 +4,14 @@ import {
   type ChangeEventHandler,
   useState,
   memo,
+  type HTMLAttributes,
 } from "react";
 import { Button } from "./Button";
 import { TextInput } from "./TextInput";
 
 export type ActionProps = {
   input?: boolean;
+  inputMode?: HTMLAttributes<string>["inputMode"];
   inputPlaceholder?: string;
   inputPattern?: RegExp;
   label: string;
@@ -19,6 +21,7 @@ export type ActionProps = {
 export const Action = memo(
   ({
     input = false,
+    inputMode,
     inputPattern = /^.*$/,
     inputPlaceholder,
     label,
@@ -63,6 +66,7 @@ export const Action = memo(
         {input && (
           <div className="mr-4">
             <TextInput
+              inputMode={inputMode}
               placeholder={inputPlaceholder}
               value={inputValue}
               onChange={onChange}
