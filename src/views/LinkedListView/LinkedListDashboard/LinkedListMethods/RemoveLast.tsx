@@ -1,8 +1,12 @@
 import { useCallback, useContext } from "react";
 import { Action } from "../../../../components/Action";
-import { LinkedListDispatchContext } from "../../state/context";
+import {
+  LinkedListContext,
+  LinkedListDispatchContext,
+} from "../../state/context";
 
 export const RemoveLast = () => {
+  const { tail } = useContext(LinkedListContext);
   const dispatch = useContext(LinkedListDispatchContext);
 
   const onClick = useCallback(
@@ -13,5 +17,11 @@ export const RemoveLast = () => {
     [dispatch],
   );
 
-  return <Action label="Remove Last" onButtonClick={onClick} />;
+  return (
+    <Action
+      disabled={tail === null}
+      label="Remove Last"
+      onButtonClick={onClick}
+    />
+  );
 };
