@@ -1,18 +1,19 @@
-import { Defs } from "../components/Svg/Defs";
-import { Arrow } from "../components/Svg/Shapes/Arrow";
-import { Circle, type CircleProps } from "../components/Svg/Shapes/Circle";
-import { HEIGHT, SvgCanvas, WIDTH } from "../components/Svg/SvgCanvas";
-import type { Coordinate } from "../types";
+import { Defs } from "../../components/Svg/Defs";
+import { Arrow } from "../../components/Svg/Shapes/Arrow";
+import { Circle, type CircleProps } from "../../components/Svg/Shapes/Circle";
+import { HEIGHT, SvgCanvas, WIDTH } from "../../components/Svg/SvgCanvas";
+import type { Coordinate } from "../../types";
+import {
+  MAX_RADIUS,
+  MAX_SPACE_BETWEEN_CIRCLES,
+  PROPORTIONAL_SPACE_TO_RADIUS_RATIO,
+  SPACE_BETWEEN_CIRCLE_AND_ARROW_TO_CIRCLE_AND_CIRCLE_RATIO,
+  VIEWPORT_PADDING,
+} from "./constants";
 
 type DataStructureViewerProps = {
   list: number[];
 };
-
-const VIEWPORT_PADDING = 50;
-const MAX_RADIUS = 150;
-const PROPORTIONAL_SPACE_TO_RADIUS_RATIO = 1.1;
-const MAX_SPACE_BETWEEN_CIRCLES = 300;
-const SPACE_BETWEEN_CIRCLE_AND_ARROW_TO_CIRCLE_AND_CIRCLE_RATIO = 0.17;
 
 export const DataStructureViewer = ({ list }: DataStructureViewerProps) => {
   const availableWidth = WIDTH - 2 * VIEWPORT_PADDING;
