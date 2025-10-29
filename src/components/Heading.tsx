@@ -4,13 +4,20 @@ import { Margin, type MarginWeight } from "./Margin";
 import { joinClassNames } from "../util";
 
 type HeadingProps = React.PropsWithChildren<{
+  collapseBottomMargin?: boolean;
   collapseTopMargin?: boolean;
   level: HeadingLevel;
   textCenter?: boolean;
 }>;
 
 export const Heading: React.FC<HeadingProps> = React.memo(
-  ({ children, collapseTopMargin, level, textCenter }) => {
+  ({
+    children,
+    collapseBottomMargin,
+    collapseTopMargin,
+    level,
+    textCenter,
+  }) => {
     const Tag = HEADING_LEVEL_TO_TAG[level];
     const marginWeight: MarginWeight = React.useMemo(() => {
       switch (level) {
@@ -24,7 +31,11 @@ export const Heading: React.FC<HeadingProps> = React.memo(
     }, [level]);
 
     return (
-      <Margin collapseTop={collapseTopMargin} weight={marginWeight}>
+      <Margin
+        collapseBottom={collapseBottomMargin}
+        collapseTop={collapseTopMargin}
+        weight={marginWeight}
+      >
         <Tag
           className={joinClassNames(
             textCenter ? "text-center" : "",
