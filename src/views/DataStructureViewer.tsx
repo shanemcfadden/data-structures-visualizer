@@ -8,23 +8,42 @@ type DataStructureViewerProps = {
   list: number[];
 };
 
+const VIEWPORT_PADDING = 50;
+const MAX_RADIUS = 150;
+const PROPORTIONAL_SPACE_TO_RADIUS_RATIO = 1.1;
+const MAX_SPACE_BETWEEN_CIRCLES = 300;
+const SPACE_BETWEEN_CIRCLE_AND_ARROW_TO_CIRCLE_AND_CIRCLE_RATIO = 0.17;
+
 export const DataStructureViewer = ({ list }: DataStructureViewerProps) => {
-  const PADDING = 120;
+  const availableWidth = WIDTH - 2 * VIEWPORT_PADDING;
 
   const numberOfCircles = list.length;
 
-  const maxHeightRadius = (HEIGHT - PADDING) / 2;
-  const maxWidthRadius =
-    (WIDTH - (numberOfCircles + 1) * PADDING) / (2 * numberOfCircles);
+  const radiusProportionalToNumberOfCircles =
+    availableWidth /
+    (2 * numberOfCircles +
+      PROPORTIONAL_SPACE_TO_RADIUS_RATIO * (numberOfCircles - 1));
+  const radius = Math.min(MAX_RADIUS, radiusProportionalToNumberOfCircles);
 
-  const radius = Math.min(maxHeightRadius, maxWidthRadius);
-  const spaceBetweenCircles =
-    (WIDTH - numberOfCircles * 2 * radius) / (numberOfCircles + 1);
+  const spaceBetweenCirclesProportionalToNumberOfCircles =
+    PROPORTIONAL_SPACE_TO_RADIUS_RATIO * radiusProportionalToNumberOfCircles;
+  const spaceBetweenCircles = Math.min(
+    MAX_SPACE_BETWEEN_CIRCLES,
+    spaceBetweenCirclesProportionalToNumberOfCircles,
+  );
+
+  const startingX = Math.max(
+    0,
+    (WIDTH -
+      (numberOfCircles * 2 * radius +
+        (numberOfCircles - 1) * spaceBetweenCircles)) /
+      2,
+  );
 
   const circles = list.map(
     (value, i): CircleProps => ({
       center: [
-        (i + 1) * spaceBetweenCircles + (2 * i + 1) * radius,
+        startingX + (2 * i + 1) * radius + i * spaceBetweenCircles,
         HEIGHT / 2,
       ],
       radius,
@@ -32,7 +51,9 @@ export const DataStructureViewer = ({ list }: DataStructureViewerProps) => {
     }),
   );
 
-  const CIRCLE_ARROW_PADDING = 12;
+  const spaceBetweenCirclesAndArrows =
+    SPACE_BETWEEN_CIRCLE_AND_ARROW_TO_CIRCLE_AND_CIRCLE_RATIO *
+    spaceBetweenCircles;
 
   const arrows = circles
     .reduce<{
@@ -66,8 +87,8 @@ export const DataStructureViewer = ({ list }: DataStructureViewerProps) => {
         start: Coordinate;
         end: Coordinate;
       } => ({
-        start: [start[0] + radius + CIRCLE_ARROW_PADDING, start[1]],
-        end: [end[0] - (radius + CIRCLE_ARROW_PADDING), end[1]],
+        start: [start[0] + radius + spaceBetweenCirclesAndArrows, start[1]],
+        end: [end[0] - (radius + spaceBetweenCirclesAndArrows), end[1]],
       }),
     );
 
