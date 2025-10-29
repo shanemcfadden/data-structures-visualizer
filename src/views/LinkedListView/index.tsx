@@ -14,8 +14,6 @@ export const LinkedListView = () => (
       <Heading level={3} textCenter>
         <LinkedListSourceCodeLink />
       </Heading>
-      <LinkedListViewer />
-      <LinkedListDashboard />
     </div>
     <div className="hidden sm:block">
       <Margin>
@@ -29,7 +27,17 @@ export const LinkedListView = () => (
         </div>
       </Margin>
       <LinkedListDashboard />
-      <LinkedListViewer />
+    </div>
+
+    {/** 
+        Declaring the underlying DataStructureViewer twice (once hidden and once not) breaks Svg Def references. For now it can be declared just once.
+
+        Will revisit later if necessary.
+    */}
+    <LinkedListViewer />
+
+    <div className="sm:hidden">
+      <LinkedListDashboard />
     </div>
   </LinkedListProvider>
 );
