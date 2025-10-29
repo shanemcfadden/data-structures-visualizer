@@ -1,4 +1,5 @@
 import type { FormEventHandler, PropsWithChildren } from "react";
+import { joinClassNames } from "../util";
 
 export type ButtonProps = PropsWithChildren<{
   disabled?: boolean;
@@ -7,7 +8,7 @@ export type ButtonProps = PropsWithChildren<{
 
 export const Button = ({ children, disabled, onSubmit }: ButtonProps) => (
   <button
-    className={[
+    className={joinClassNames(
       "bg-blue-700",
       "border",
       "border-blue-700",
@@ -22,7 +23,7 @@ export const Button = ({ children, disabled, onSubmit }: ButtonProps) => (
       "px-4",
       "rounded",
       "text-white",
-    ].join(" ")}
+    )}
     disabled={disabled}
     onClick={onSubmit}
     type="button"

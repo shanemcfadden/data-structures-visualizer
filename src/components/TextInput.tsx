@@ -3,6 +3,7 @@ import type {
   HTMLAttributes,
   KeyboardEventHandler,
 } from "react";
+import { joinClassNames } from "../util";
 
 export type TextInputProps = {
   disabled?: boolean;
@@ -22,7 +23,7 @@ export const TextInput = ({
   value,
 }: TextInputProps) => (
   <input
-    className={[
+    className={joinClassNames(
       "bg-gray-800",
       "border",
       "border-gray-600",
@@ -32,7 +33,7 @@ export const TextInput = ({
       "placeholder-gray-500",
       "rounded",
       "w-full",
-    ].join(" ")}
+    )}
     disabled={disabled}
     inputMode={inputMode}
     onChange={onChange}
