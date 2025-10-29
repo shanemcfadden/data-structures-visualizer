@@ -10,6 +10,7 @@ import { Button } from "./Button";
 import { TextInput } from "./TextInput";
 
 export type ActionProps = {
+  disabled?: boolean;
   input?: boolean;
   inputMode?: HTMLAttributes<string>["inputMode"];
   inputPlaceholder?: string;
@@ -20,6 +21,7 @@ export type ActionProps = {
 
 export const Action = memo(
   ({
+    disabled,
     input = false,
     inputMode,
     inputPattern = /^.*$/,
@@ -66,6 +68,7 @@ export const Action = memo(
         {input && (
           <div className="mr-4">
             <TextInput
+              disabled={disabled}
               inputMode={inputMode}
               placeholder={inputPlaceholder}
               value={inputValue}
@@ -74,7 +77,9 @@ export const Action = memo(
             />
           </div>
         )}
-        <Button onSubmit={onButtonClick}>{label}</Button>
+        <Button disabled={disabled} onSubmit={onButtonClick}>
+          {label}
+        </Button>
       </div>
     );
   },
