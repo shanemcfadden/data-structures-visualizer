@@ -30,9 +30,9 @@ export const LinkedListView = () => (
     </div>
 
     {/** 
-        Declaring the underlying DataStructureViewer twice (once hidden and once not) breaks Svg Def references. For now it can be declared just once.
+        Declaring LinkedListViewer's underlying DataStructureViewer twice (once hidden and once not) breaks Svg Def references.
 
-        Will revisit later if necessary.
+        For now it can be declared just once. Will revisit later if necessary.
     */}
     <LinkedListViewer />
 
