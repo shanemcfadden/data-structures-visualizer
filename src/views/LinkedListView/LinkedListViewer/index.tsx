@@ -1,8 +1,12 @@
-import { Defs } from "../../components/Svg/Defs";
-import { Arrow } from "../../components/Svg/Shapes/Arrow";
-import { Circle, type CircleProps } from "../../components/Svg/Shapes/Circle";
-import { HEIGHT, SvgCanvas, WIDTH } from "../../components/Svg/SvgCanvas";
-import type { Coordinate } from "../../types";
+import { useContext } from "react";
+import { Defs } from "../../../components/Svg/Defs";
+import { Arrow } from "../../../components/Svg/Shapes/Arrow";
+import {
+  Circle,
+  type CircleProps,
+} from "../../../components/Svg/Shapes/Circle";
+import { HEIGHT, SvgCanvas, WIDTH } from "../../../components/Svg/SvgCanvas";
+import type { Coordinate } from "../../../types";
 import {
   MAX_RADIUS,
   MAX_SPACE_BETWEEN_CIRCLES,
@@ -10,12 +14,11 @@ import {
   SPACE_BETWEEN_CIRCLE_AND_ARROW_TO_CIRCLE_AND_CIRCLE_RATIO,
   VIEWPORT_PADDING,
 } from "./constants";
+import { LinkedListContext } from "../state/context";
 
-type DataStructureViewerProps = {
-  list: number[];
-};
+export const LinkedListViewer = () => {
+  const { list } = useContext(LinkedListContext);
 
-export const DataStructureViewer = ({ list }: DataStructureViewerProps) => {
   const availableWidth = WIDTH - 2 * VIEWPORT_PADDING;
 
   const numberOfCircles = list.length;
