@@ -1,9 +1,6 @@
 import { useCallback, useContext } from "react";
-import { Action } from "../../../../components/Action";
-import {
-  LinkedListContext,
-  LinkedListDispatchContext,
-} from "../../state/context";
+import { Action } from "../../../components/Action";
+import { LinkedListContext, LinkedListDispatchContext } from "../state/context";
 
 export const RemoveFirst = () => {
   const { head } = useContext(LinkedListContext);

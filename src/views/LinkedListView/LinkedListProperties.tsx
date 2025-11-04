@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { Heading } from "../../../components/Heading";
-import { LinkedListContext } from "../state/context";
+import { Heading } from "../../components/Heading";
+import { LinkedListContext } from "./state/context";
 
 type LinkedListPropertiesProps = {
   collapseTopMargin?: boolean;

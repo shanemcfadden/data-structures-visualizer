@@ -1,5 +1,5 @@
-import { Heading } from "../../../../components/Heading";
-import { Margin } from "../../../../components/Margin";
+import { Heading } from "../../../components/Heading";
+import { Margin } from "../../../components/Margin";
 import { Append } from "./Append";
 import { Prepend } from "./Prepend";
 import { RemoveFirst } from "./RemoveFirst";

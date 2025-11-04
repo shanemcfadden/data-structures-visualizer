@@ -1,7 +1,7 @@
 import { LinkedListProvider } from "./state/LinkedListContext";
 import { LinkedListViewer } from "./LinkedListViewer";
-import { LinkedListMethods } from "./LinkedListDashboard/LinkedListMethods";
-import { LinkedListProperties } from "./LinkedListDashboard/LinkedListProperties";
+import { LinkedListMethods } from "./LinkedListMethods";
+import { LinkedListProperties } from "./LinkedListProperties";
 import { DataStructureView } from "../DataStructureView";
 
 export const LinkedListView = () => (
