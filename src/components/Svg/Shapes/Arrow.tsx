@@ -23,8 +23,8 @@ export const Arrow = ({
       x2={endPointer ? x2 - ARROW_HEAD_LENGTH : x2}
       y1={y1}
       y2={y2}
-      stroke-width={strokeWidth}
-      marker-end={endPointer ? ARROW_HEAD_REF : "none"}
+      strokeWidth={strokeWidth}
+      markerEnd={endPointer ? ARROW_HEAD_REF : "none"}
     />
   );
 };

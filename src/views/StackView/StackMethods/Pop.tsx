@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
-import { Action } from "../../../../components/Action";
-import { StackContext, StackDispatchContext } from "../../state/context";
+import { Action } from "../../../components/Action";
+import { StackContext, StackDispatchContext } from "../state/context";
 
 export const Pop = () => {
   const stack = useContext(StackContext);

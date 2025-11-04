@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { StackContext } from "../state/context";
-import { Heading } from "../../../components/Heading";
+import { StackContext } from "./state/context";
+import { Heading } from "../../components/Heading";
 
 export const StackProperties = ({
   collapseTopMargin,

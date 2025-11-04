@@ -1,8 +1,8 @@
 import { useCallback, useContext } from "react";
-import { StackContext, StackDispatchContext } from "../../state/context";
-import { Action } from "../../../../components/Action";
-import { MAX_STACK_SIZE } from "../../state/constants";
-import { UP_TO_THREE_DIGITS_PATTERN } from "../../../../constants";
+import { StackContext, StackDispatchContext } from "../state/context";
+import { Action } from "../../../components/Action";
+import { MAX_STACK_SIZE } from "../state/constants";
+import { UP_TO_THREE_DIGITS_PATTERN } from "../../../constants";
 
 export const Push = () => {
   const stack = useContext(StackContext);

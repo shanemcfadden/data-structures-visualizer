@@ -1,5 +1,5 @@
-import { Heading } from "../../../../components/Heading";
-import { Margin } from "../../../../components/Margin";
+import { Heading } from "../../../components/Heading";
+import { Margin } from "../../../components/Margin";
 import { Pop } from "./Pop";
 import { Push } from "./Push";
 
