@@ -1,11 +1,9 @@
 import { useContext } from "react";
-import { Defs } from "../../../components/Svg/Defs";
 import { Arrow } from "../../../components/Svg/Shapes/Arrow";
 import {
   Circle,
   type CircleProps,
 } from "../../../components/Svg/Shapes/Circle";
-import { HEIGHT, SvgCanvas, WIDTH } from "../../../components/Svg/SvgCanvas";
 import type { Coordinate } from "../../../types";
 import {
   MAX_RADIUS,
@@ -15,6 +13,11 @@ import {
   VIEWPORT_PADDING,
 } from "./constants";
 import { LinkedListContext } from "../state/context";
+import {
+  DataStructureCanvas,
+  DATA_STRUCTURE_CANVAS_WIDTH as WIDTH,
+  DATA_STRUCTURE_CANVAS_HEIGHT as HEIGHT,
+} from "../../../components/DataStructureCanvas";
 
 export const LinkedListViewer = () => {
   const { list } = useContext(LinkedListContext);
@@ -97,11 +100,7 @@ export const LinkedListViewer = () => {
     );
 
   return (
-    <SvgCanvas>
-      <Defs />
-
-      <rect className="fill-blue-700" width="100%" height="100%" />
-
+    <DataStructureCanvas>
       {circles.map((props, i) => (
         <Circle key={i} {...props} />
       ))}
@@ -109,6 +108,6 @@ export const LinkedListViewer = () => {
       {arrows.map((props, i) => (
         <Arrow key={i} endPointer {...props} />
       ))}
-    </SvgCanvas>
+    </DataStructureCanvas>
   );
 };
