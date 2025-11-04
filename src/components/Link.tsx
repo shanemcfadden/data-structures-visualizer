@@ -11,7 +11,7 @@ export const Link = ({ children, to }: LinkProps) => (
     target="_blank"
     rel="noreferrer"
   >
-    {children}
+    {children}&nbsp;
     <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
   </a>
 );
