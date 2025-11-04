@@ -5,15 +5,11 @@ import { Heading } from "../../components/Heading";
 
 export const LinkedListView = () => (
   <LinkedListProvider>
-    <div className="sm:hidden">
-      <Heading level={2} textCenter>
-        Linked List
-      </Heading>
-    </div>
+    <Heading level={2} textCenter>
+      Linked List
+    </Heading>
+
     <div className="hidden sm:block">
-      <Heading textCenter level={2}>
-        Linked List
-      </Heading>
       <LinkedListDashboard />
     </div>
 
