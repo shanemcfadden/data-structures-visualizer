@@ -108,4 +108,27 @@ describe("Stack", () => {
       );
     });
   });
+
+  describe("iterator", () => {
+    it("Yields members of the stack in the same order they were added", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer()), (arr) => {
+          const stack = new Stack<number>(arr);
+          expect([...stack]).toEqual(arr);
+        }),
+      );
+    });
+    it("Does not alter size of existing stack on iteration", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer()), (arr) => {
+          const stack = new Stack<number>(arr);
+          const initialSize = stack.size;
+
+          [...stack];
+
+          expect(stack.size).toBe(initialSize);
+        }),
+      );
+    });
+  });
 });
