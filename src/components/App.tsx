@@ -8,7 +8,7 @@ export const App = () => (
     <Heading level={1} textCenter>
       Data Structures Visualizer
     </Heading>
-    <LinkedListView />
+    {/* <LinkedListView /> */}
     <StackView />
   </Container>
 );

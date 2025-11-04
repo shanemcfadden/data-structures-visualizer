@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { StackContext } from "./state/context";
 import { StackProvider } from "./state/StackContext";
 import { StackMethods } from "./StackMethods";
 import { StackProperties } from "./StackProperties";
 import { DataStructureView } from "../DataStructureView";
+import { StackViewer } from "./StackViewer";
 
 export const StackView = () => (
   <DataStructureView
@@ -16,8 +15,3 @@ export const StackView = () => (
     wikiSlug="Stack_(abstract_data_type)"
   />
 );
-
-const StackViewer = () => {
-  const stack = useContext(StackContext);
-  return <div>{stack.members.join(", ")}</div>;
-};
