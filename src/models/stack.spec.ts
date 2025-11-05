@@ -13,7 +13,7 @@ describe("Stack", () => {
       fc.property(fc.array(fc.integer()), (arr) => {
         const stack = new Stack<number>(arr);
         expect(stack.size).toBe(arr.length);
-        expect(stack.pop()).toBe(arr[arr.length - 1] ?? null);
+        expect(stack.pop()).toBe(arr[0] ?? null);
       }),
     );
   });
@@ -53,14 +53,14 @@ describe("Stack", () => {
         }),
       );
     });
-    it("Yields array members in reverse order", () => {
+    it("Yields array members in order", () => {
       fc.assert(
         fc.property(fc.array(fc.integer()), (arr) => {
           const stack = new Stack<number>(arr);
 
           for (let i = 0; i < arr.length; i++) {
             const popped = stack.pop();
-            expect(popped).toBe(arr[arr.length - 1 - i]);
+            expect(popped).toBe(arr[i]);
           }
         }),
       );
@@ -83,9 +83,7 @@ describe("Stack", () => {
 
             for (let i = 0; i < initializedMembers.length; i++) {
               const popped = stack.pop();
-              expect(popped).toBe(
-                initializedMembers[initializedMembers.length - 1 - i],
-              );
+              expect(popped).toBe(initializedMembers[i]);
             }
 
             expect(stack.size).toBe(0);

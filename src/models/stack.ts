@@ -12,13 +12,14 @@ export class Stack<T> implements Iterable<T> {
   }
 
   pop() {
-    return this.linkedList.removeLast();
+    return this.linkedList.removeFirst();
   }
 
   push(item: T) {
-    return this.linkedList.append(item);
+    return this.linkedList.prepend(item);
   }
 
+  // Head of the linked list is the top of the stack
   [Symbol.iterator]() {
     return this.linkedList[Symbol.iterator]();
   }
