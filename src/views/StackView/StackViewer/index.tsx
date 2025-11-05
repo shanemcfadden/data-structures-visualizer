@@ -26,8 +26,8 @@ export const StackViewer = () => {
             (DATA_STRUCTURE_CANVAS_WIDTH - ELEMENT_WIDTH) / 2,
             DATA_STRUCTURE_CANVAS_HEIGHT -
               BOTTOM_PADDING -
-              i * PADDING -
-              (i + 1) * ELEMENT_HEIGHT,
+              (stack.members.length - i - 1) * PADDING -
+              (stack.members.length - i) * ELEMENT_HEIGHT,
           ]}
           text={value.toString()}
           width={ELEMENT_WIDTH}
