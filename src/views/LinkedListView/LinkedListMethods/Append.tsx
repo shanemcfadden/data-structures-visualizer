@@ -1,11 +1,8 @@
 import { useCallback, useContext } from "react";
-import { Action } from "../../../../components/Action";
-import { UP_TO_THREE_DIGITS_PATTERN } from "../../../../constants";
-import {
-  LinkedListContext,
-  LinkedListDispatchContext,
-} from "../../state/context";
-import { MAX_LINKED_LIST_LENGTH } from "../../state/constants";
+import { Action } from "../../../components/Action";
+import { UP_TO_THREE_DIGITS_PATTERN } from "../../../constants";
+import { LinkedListContext, LinkedListDispatchContext } from "../state/context";
+import { MAX_LINKED_LIST_LENGTH } from "../state/constants";
 
 export const Append = () => {
   const { list } = useContext(LinkedListContext);

@@ -228,6 +228,7 @@ describe("LinkedList", () => {
       );
     });
   });
+
   describe("iterator", () => {
     it("Should yield values in order when iterating over a non-empty linked list into an array", () => {
       fc.assert(
