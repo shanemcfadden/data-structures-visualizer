@@ -1,17 +1,17 @@
 import type { Coordinate } from "../../../types";
 
 export type RectangleProps = {
-  origin: Coordinate;
   height: number;
-  width: number;
+  origin: Coordinate;
   text?: string;
+  width: number;
 };
 
 export const Rectangle = ({
-  origin: [x, y],
   height,
-  width,
+  origin: [x, y],
   text,
+  width,
 }: RectangleProps) => (
   <>
     <rect

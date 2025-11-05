@@ -21,6 +21,7 @@ export const StackViewer = () => {
       {stack.members.map((value, i) => (
         <Rectangle
           key={i}
+          height={ELEMENT_HEIGHT}
           origin={[
             (DATA_STRUCTURE_CANVAS_WIDTH - ELEMENT_WIDTH) / 2,
             DATA_STRUCTURE_CANVAS_HEIGHT -
@@ -28,9 +29,8 @@ export const StackViewer = () => {
               i * PADDING -
               (i + 1) * ELEMENT_HEIGHT,
           ]}
-          width={ELEMENT_WIDTH}
-          height={ELEMENT_HEIGHT}
           text={value.toString()}
+          width={ELEMENT_WIDTH}
         />
       ))}
     </DataStructureCanvas>
