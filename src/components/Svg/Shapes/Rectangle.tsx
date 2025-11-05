@@ -25,7 +25,7 @@ export const Rectangle = ({
       className="fill-white"
       x={x + width / 2}
       y={y + height / 2}
-      fontSize={Math.min(height, width) * 0.6}
+      fontSize={Math.min(height, width) * 0.5}
       textAnchor="middle"
       dominantBaseline="middle"
     >

@@ -10,6 +10,9 @@ export const Navigation = () => (
         <Link to="/linked-list">Linked List</Link>
       </ListItem>
       <ListItem>
+        <Link to="/queue">Queue</Link>
+      </ListItem>
+      <ListItem>
         <Link to="/stack">Stack</Link>
       </ListItem>
     </UnorderedList>
