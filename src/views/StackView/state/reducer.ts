@@ -16,8 +16,9 @@ export const stackReducer: Reducer<StackState, StackAction> = (
         stack.push(action.value);
       }
       return stackToState(stack);
-    case "POP":
+    case "POP": {
       const result = stack.pop();
       return stackToState(stack, { type: "POP", value: result });
+    }
   }
 };

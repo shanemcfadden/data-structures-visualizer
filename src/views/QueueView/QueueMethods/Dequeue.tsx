@@ -31,6 +31,3 @@ export const Dequeue = () => {
     />
   );
 };
-function nullableNumberTostring(value: number | null): any {
-  throw new Error("Function not implemented.");
-}

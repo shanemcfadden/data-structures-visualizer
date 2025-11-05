@@ -15,11 +15,12 @@ export const queueReducer: Reducer<QueueState, QueueAction> = (
         queue.enqueue(action.value);
       }
       return queueToState(queue);
-    case "DEQUEUE":
+    case "DEQUEUE": {
       const result = queue.dequeue();
       return queueToState(queue, {
         type: "DEQUEUE",
         value: result,
       });
+    }
   }
 };
