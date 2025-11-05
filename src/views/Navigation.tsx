@@ -1,12 +1,17 @@
-import { Link } from "react-router";
+import { Link } from "../components/Link";
+import { Heading } from "../components/Heading";
+import { ListItem, UnorderedList } from "../components/List";
 
 export const Navigation = () => (
   <div>
-    <div>
-      <Link to="/linked-list">Linked List</Link>
-    </div>
-    <div>
-      <Link to="/stack">Stack</Link>
-    </div>
+    <Heading level={2}>Data Structures</Heading>
+    <UnorderedList>
+      <ListItem>
+        <Link to="/linked-list">Linked List</Link>
+      </ListItem>
+      <ListItem>
+        <Link to="/stack">Stack</Link>
+      </ListItem>
+    </UnorderedList>
   </div>
 );
