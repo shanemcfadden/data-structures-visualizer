@@ -16,9 +16,9 @@ export type ActionProps = {
   inputPlaceholder?: string;
   inputPattern?: RegExp;
   label: string;
+  onButtonClick: (input?: string) => void;
   result?: string;
   resultLabel?: string;
-  onButtonClick: (input?: string) => void;
 };
 
 export const Action = memo(
