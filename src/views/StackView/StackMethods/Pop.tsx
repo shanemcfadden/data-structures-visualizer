@@ -1,6 +1,7 @@
 import { useCallback, useContext, useMemo } from "react";
 import { Action } from "../../../components/Action";
 import { StackContext, StackDispatchContext } from "../state/context";
+import { nullableNumberToString } from "../../../util";
 
 export const Pop = () => {
   const stack = useContext(StackContext);
@@ -14,11 +15,9 @@ export const Pop = () => {
     [dispatch],
   );
 
-  const popResult = useMemo(() => {
+  const result = useMemo(() => {
     if (stack.actionResult?.type === "POP") {
-      return stack.actionResult.value === null
-        ? "null"
-        : stack.actionResult.value.toString();
+      return nullableNumberToString(stack.actionResult.value);
     }
   }, [stack]);
 
@@ -27,7 +26,7 @@ export const Pop = () => {
       disabled={stack.members.length === 0}
       label="Pop"
       onButtonClick={onButtonClick}
-      result={popResult}
+      result={result}
       resultLabel="Popped"
     />
   );

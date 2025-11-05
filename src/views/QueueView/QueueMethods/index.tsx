@@ -16,9 +16,7 @@ export const QueueMethods = ({
       <Enqueue />
     </Margin>
     <Margin weight="small">
-      <div className="flex justify-end">
-        <Dequeue />
-      </div>
+      <Dequeue />
     </Margin>
   </div>
 );
