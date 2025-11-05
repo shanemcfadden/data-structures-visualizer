@@ -13,15 +13,15 @@ interface DataStructureViewProps extends DataStructureDashboardProps {
 }
 
 export const DataStructureView = ({
-  ContextProvider: DataStructureContextProvider,
+  ContextProvider,
   heading,
-  Properties,
   Methods,
   modelPath,
+  Properties,
   Viewer,
   wikiSlug,
 }: DataStructureViewProps) => (
-  <DataStructureContextProvider>
+  <ContextProvider>
     <Heading level={2} textCenter>
       {heading}
     </Heading>
@@ -52,5 +52,5 @@ export const DataStructureView = ({
         wikiSlug={wikiSlug}
       />
     </div>
-  </DataStructureContextProvider>
+  </ContextProvider>
 );

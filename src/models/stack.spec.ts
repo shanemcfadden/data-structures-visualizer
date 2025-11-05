@@ -124,8 +124,8 @@ describe("Stack", () => {
           const stack = new Stack<number>(arr);
           const initialSize = stack.size;
 
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const _iterated = [...stack];
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          [...stack];
 
           expect(stack.size).toBe(initialSize);
         }),
