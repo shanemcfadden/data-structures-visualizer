@@ -1,14 +1,12 @@
 import { Link } from "react-router";
 
-export const Navigation = () => {
-  return (
+export const Navigation = () => (
+  <div>
     <div>
-      <div>
-        <Link to="/linked-list">Linked List</Link>
-      </div>
-      <div>
-        <Link to="/stack">Stack</Link>
-      </div>
+      <Link to="/linked-list">Linked List</Link>
     </div>
-  );
-};
+    <div>
+      <Link to="/stack">Stack</Link>
+    </div>
+  </div>
+);
