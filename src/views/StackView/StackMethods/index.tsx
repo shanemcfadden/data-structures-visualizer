@@ -16,9 +16,7 @@ export const StackMethods = ({
       <Push />
     </Margin>
     <Margin weight="small">
-      <div className="flex justify-end">
-        <Pop />
-      </div>
+      <Pop />
     </Margin>
   </div>
 );

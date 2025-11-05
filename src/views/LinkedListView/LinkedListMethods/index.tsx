@@ -22,10 +22,10 @@ export const LinkedListMethods = ({
       <Prepend />
     </Margin>
     <Margin weight="small">
-      <div className="flex justify-between">
-        <RemoveFirst />
-        <RemoveLast />
-      </div>
+      <RemoveFirst />
+    </Margin>
+    <Margin weight="small">
+      <RemoveLast />
     </Margin>
   </div>
 );

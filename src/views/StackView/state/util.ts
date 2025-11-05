@@ -1,7 +1,11 @@
 import { Stack } from "../../../models/stack";
-import type { StackState } from "./types";
+import type { StackActionResult, StackState } from "./types";
 
-export const stackToState = (stack: Stack<number>): StackState => ({
+export const stackToState = (
+  stack: Stack<number>,
+  actionResult: StackActionResult | null = null,
+): StackState => ({
+  actionResult,
   members: [...stack],
 });
 

@@ -9,25 +9,31 @@ export const linkedListReducer: Reducer<LinkedListState, LinkedListAction> = (
   action,
 ) => {
   const linkedList = new LinkedList(state.list);
+
   switch (action.type) {
     case "APPEND":
-      if (linkedList.length >= MAX_LINKED_LIST_LENGTH) {
-        break;
+      if (linkedList.length < MAX_LINKED_LIST_LENGTH) {
+        linkedList.append(action.value);
       }
-      linkedList.append(action.value);
-      break;
+      return linkedListToState(linkedList);
     case "PREPEND":
-      if (linkedList.length >= MAX_LINKED_LIST_LENGTH) {
-        break;
+      if (linkedList.length < MAX_LINKED_LIST_LENGTH) {
+        linkedList.prepend(action.value);
       }
-      linkedList.prepend(action.value);
-      break;
-    case "REMOVE_FIRST":
-      linkedList.removeFirst();
-      break;
-    case "REMOVE_LAST":
-      linkedList.removeLast();
-      break;
+      return linkedListToState(linkedList);
+    case "REMOVE_FIRST": {
+      const result = linkedList.removeFirst();
+      return linkedListToState(linkedList, {
+        type: "REMOVE_FIRST",
+        value: result,
+      });
+    }
+    case "REMOVE_LAST": {
+      const result = linkedList.removeLast();
+      return linkedListToState(linkedList, {
+        type: "REMOVE_LAST",
+        value: result,
+      });
+    }
   }
-  return linkedListToState(linkedList);
 };

@@ -17,6 +17,8 @@ export type ActionProps = {
   inputPattern?: RegExp;
   label: string;
   onButtonClick: (input?: string) => void;
+  result?: string;
+  resultLabel?: string;
 };
 
 export const Action = memo(
@@ -28,6 +30,8 @@ export const Action = memo(
     inputPlaceholder,
     label,
     onButtonClick: onButtonClickRaw,
+    result,
+    resultLabel,
   }: ActionProps) => {
     const [inputValue, setInputValue] = useState<string>("");
 
@@ -64,7 +68,7 @@ export const Action = memo(
     );
 
     return (
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         {input && (
           <div className="mr-4">
             <TextInput
@@ -80,6 +84,11 @@ export const Action = memo(
         <Button disabled={disabled} onSubmit={onButtonClick}>
           {label}
         </Button>
+        {result && (
+          <div>
+            {resultLabel || "Result"}: {result}
+          </div>
+        )}
       </div>
     );
   },

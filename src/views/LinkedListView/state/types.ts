@@ -1,4 +1,5 @@
 export type LinkedListState = {
+  actionResult: LinkedListActionResult | null;
   head: number | null;
   tail: number | null;
   list: number[];
@@ -18,4 +19,14 @@ export type LinkedListAction =
     }
   | {
       type: "REMOVE_LAST";
+    };
+
+export type LinkedListActionResult =
+  | {
+      type: "REMOVE_FIRST";
+      value: number | null;
+    }
+  | {
+      type: "REMOVE_LAST";
+      value: number | null;
     };
