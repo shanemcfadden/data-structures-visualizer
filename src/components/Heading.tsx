@@ -49,6 +49,7 @@ export const Heading: React.FC<HeadingProps> = React.memo(
     );
   },
 );
+Heading.displayName = "Heading";
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 

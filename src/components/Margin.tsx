@@ -29,6 +29,7 @@ export const Margin = React.memo(
     return <div className={className}>{children}</div>;
   },
 );
+Margin.displayName = "Margin";
 
 export type MarginWeight = "extra-small" | "small" | "medium" | "large";
 

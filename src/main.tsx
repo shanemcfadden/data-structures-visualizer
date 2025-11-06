@@ -1,6 +1,4 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { Layout } from "./views/Layout.tsx";
 import { LinkedListView } from "./views/LinkedListView/index.tsx";
@@ -8,7 +6,7 @@ import { StackView } from "./views/StackView/index.tsx";
 import { Navigation } from "./views/Navigation.tsx";
 import { QueueView } from "./views/QueueView/index.tsx";
 
-createRoot(document.getElementById("root")!).render(
+const App = () => (
   <StrictMode>
     <BrowserRouter basename="data-structures-visualizer">
       <Routes>
@@ -20,5 +18,6 @@ createRoot(document.getElementById("root")!).render(
         </Route>
       </Routes>
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode>
 );
+export default App;
