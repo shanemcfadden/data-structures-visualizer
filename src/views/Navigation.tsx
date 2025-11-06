@@ -7,13 +7,13 @@ export const Navigation = () => (
     <Heading level={2}>Data Structures</Heading>
     <UnorderedList>
       <ListItem>
-        <Link to="/linked-list">Linked List</Link>
+        <Link href="/linked-list">Linked List</Link>
       </ListItem>
       <ListItem>
-        <Link to="/queue">Queue</Link>
+        <Link href="/queue">Queue</Link>
       </ListItem>
       <ListItem>
-        <Link to="/stack">Stack</Link>
+        <Link href="/stack">Stack</Link>
       </ListItem>
     </UnorderedList>
   </div>
