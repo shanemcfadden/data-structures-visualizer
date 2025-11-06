@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import { Link as ReactRouterLink } from "react-router";
+import NextJsLink from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
@@ -20,7 +20,7 @@ export const Link = ({ children, external = false, to }: LinkProps) =>
       <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
     </a>
   ) : (
-    <ReactRouterLink className="text-blue-400 hover:underline" to={to}>
+    <NextJsLink className="text-blue-400 hover:underline" href={to}>
       {children}
-    </ReactRouterLink>
+    </NextJsLink>
   );
