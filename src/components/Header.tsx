@@ -26,7 +26,7 @@ export const Header = () => {
 
 const HeaderButtonContainer = ({ children }: PropsWithChildren) => {
   return (
-    <div className="text-xl w-16 flex justify-center items-center">
+    <div className="text-xl w-12 flex justify-center items-center">
       {children}
     </div>
   );
