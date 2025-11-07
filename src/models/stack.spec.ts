@@ -1,4 +1,3 @@
-import { describe, expect, it } from "vitest";
 import { Stack } from "./stack";
 import fc from "fast-check";
 

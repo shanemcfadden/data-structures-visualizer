@@ -26,10 +26,10 @@ export const DataStructureDashboard = ({
       <Methods collapseTopMargin />
     </div>
     <div className="flex items-center justify-between">
-      <Link external to={toRepositoryFilePath(modelPath)}>
+      <Link external href={toRepositoryFilePath(modelPath)}>
         Source Code
       </Link>
-      <Link external to={toWikiUrl(wikiSlug)}>
+      <Link external href={toWikiUrl(wikiSlug)}>
         Wiki
       </Link>
     </div>

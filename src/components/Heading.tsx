@@ -49,6 +49,7 @@ export const Heading: React.FC<HeadingProps> = React.memo(
     );
   },
 );
+Heading.displayName = "Heading";
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -63,7 +64,7 @@ const HEADING_LEVEL_TO_TAG: Record<HeadingLevel, keyof JSX.IntrinsicElements> =
   };
 
 const HEADING_LEVEL_TO_CLASS: Record<HeadingLevel, string> = {
-  1: "text-3xl",
+  1: "text-2xl sm:text-3xl",
   2: "text-2xl",
   3: "text-lg",
   4: "text-md",

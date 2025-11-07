@@ -5,6 +5,7 @@ import {
   DataStructureDashboard,
   type DataStructureDashboardProps,
 } from "./DataStructureDashboard";
+import Head from "next/head";
 
 interface DataStructureViewProps extends DataStructureDashboardProps {
   ContextProvider: (props: PropsWithChildren) => JSX.Element;
@@ -22,6 +23,9 @@ export const DataStructureView = ({
   wikiSlug,
 }: DataStructureViewProps) => (
   <ContextProvider>
+    <Head>
+      <title>{heading}</title>
+    </Head>
     <Heading level={2} textCenter>
       {heading}
     </Heading>

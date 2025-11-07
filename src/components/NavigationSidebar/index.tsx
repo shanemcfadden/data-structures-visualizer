@@ -1,0 +1,30 @@
+import { useContext } from "react";
+import { joinClassNames } from "../../util";
+import { NAVIGATION_LINKS } from "../../constants";
+import { Heading } from "../Heading";
+import { NavigationSidebarLink } from "./NavigationSidbarLink";
+import { NavigationSidebarContext } from "./NavigationSidebarContext";
+import { NavigationSidebarOverlay } from "./NavigationSidebarOverlay";
+
+export const NavigationSidebar = () => {
+  const { isOpen } = useContext(NavigationSidebarContext);
+
+  return (
+    <div>
+      <NavigationSidebarOverlay />
+      <nav
+        className={joinClassNames(
+          "fixed left-0 top-0 bg-gray-800 h-full px-4 transition-transform duration-300 w-64",
+          isOpen ? "translate-x-0" : "-translate-x-full",
+        )}
+      >
+        <Heading level={3}>Data Structures</Heading>
+        <ul>
+          {NAVIGATION_LINKS.map(({ href, label }) => (
+            <NavigationSidebarLink key={href} href={href} label={label} />
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
+};

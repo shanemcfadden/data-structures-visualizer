@@ -1,18 +1,18 @@
 import type { PropsWithChildren } from "react";
-import { Link as ReactRouterLink } from "react-router";
+import NextJsLink from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 type LinkProps = PropsWithChildren<{
   external?: boolean;
-  to: string;
+  href: string;
 }>;
 
-export const Link = ({ children, external = false, to }: LinkProps) =>
+export const Link = ({ children, external = false, href }: LinkProps) =>
   external ? (
     <a
       className="text-blue-400 hover:underline"
-      href={to}
+      href={href}
       target="_blank"
       rel="noreferrer"
     >
@@ -20,7 +20,7 @@ export const Link = ({ children, external = false, to }: LinkProps) =>
       <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
     </a>
   ) : (
-    <ReactRouterLink className="text-blue-400 hover:underline" to={to}>
+    <NextJsLink className="text-blue-400 hover:underline" href={href}>
       {children}
-    </ReactRouterLink>
+    </NextJsLink>
   );
