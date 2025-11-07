@@ -1,5 +1,13 @@
+import Head from "next/head";
 import { Navigation } from "../views/Navigation";
 
 export default function Home() {
-  return <Navigation />;
+  return (
+    <>
+      <Head>
+        <title>Data Structures Visualizer</title>
+      </Head>
+      <Navigation />
+    </>
+  );
 }
