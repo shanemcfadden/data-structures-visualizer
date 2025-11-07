@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/data-structures-visualizer",
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? "",
   output: "export",
   distDir: "./dist",
 };
