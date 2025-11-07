@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState, type PropsWithChildren } from "react";
+import { useMemo, useState, type PropsWithChildren } from "react";
 import { NavigationSidebarContext } from "./NavigationSidebarContext";
 
 export const NavigationSidebarContextProvider = ({
@@ -8,9 +8,11 @@ export const NavigationSidebarContextProvider = ({
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
+  const [previousPathName, setPreviousPathName] = useState(router.pathname);
+  if (router.pathname !== previousPathName) {
+    setPreviousPathName(router.pathname);
     setIsOpen(false);
-  }, [router.pathname]);
+  }
 
   const value = useMemo(() => ({ isOpen, setIsOpen }), [isOpen]);
 
