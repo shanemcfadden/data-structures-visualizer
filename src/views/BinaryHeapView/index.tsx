@@ -1,6 +1,7 @@
 import { DataStructureView } from "../DataStructureView";
 import { BinaryHeapMethods } from "./BinaryHeapMethods";
 import { BinaryHeapProperties } from "./BinaryHeapProperties";
+import { BinaryHeapViewer } from "./BinaryHeapViewer";
 import { BinaryHeapProvider } from "./state/BinaryHeapContext";
 
 export const BinaryHeapView = () => (
@@ -14,5 +15,3 @@ export const BinaryHeapView = () => (
     wikiSlug="Binary_heap"
   />
 );
-
-const BinaryHeapViewer = () => <div />;

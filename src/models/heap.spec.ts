@@ -8,6 +8,81 @@ describe("heap", () => {
     expect(heap.size).toBe(0);
   });
 
+  describe("members", () => {
+    it("indicates number of rows within the heap scaling logarithmically", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer()), (array) => {
+          const heap = new MinHeap();
+
+          array.forEach((member) => {
+            heap.insert(member);
+          });
+
+          expect(heap.members.length).toBe(
+            Math.ceil(Math.log2(array.length + 1)),
+          );
+        }),
+      );
+    });
+    it("each row should be double the length of the previous row (except for the final row)", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer()), (array) => {
+          const heap = new MinHeap();
+
+          array.forEach((member) => {
+            heap.insert(member);
+          });
+
+          const calculatedMembers = heap.members;
+          for (let i = 0; i < calculatedMembers.length - 2; i++) {
+            const j = i + 1;
+            expect(calculatedMembers[j].length).toBe(
+              calculatedMembers[i].length * 2,
+            );
+          }
+        }),
+      );
+    });
+    it("number of members should equal the number inserted into the heap", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer()), (array) => {
+          const heap = new MinHeap();
+
+          array.forEach((member) => {
+            heap.insert(member);
+          });
+
+          expect(heap.members.flat().length).toEqual(array.length);
+        }),
+      );
+    });
+    it("members should be less than or equal two existing children", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer()), (array) => {
+          const heap = new MinHeap();
+
+          array.forEach((member) => {
+            heap.insert(member);
+          });
+
+          const calculatedMembers = heap.members;
+          calculatedMembers.forEach((row, i) => {
+            row.forEach((member, j) => {
+              const leftChild = calculatedMembers[i + 1]?.[j * 2];
+              if (leftChild !== undefined) {
+                expect(leftChild).toBeGreaterThanOrEqual(member);
+              }
+              const rightChild = calculatedMembers[i + 1]?.[j * 2 + 1];
+              if (rightChild !== undefined) {
+                expect(rightChild).toBeGreaterThanOrEqual(member);
+              }
+            });
+          });
+        }),
+      );
+    });
+  });
+
   describe("insert", () => {
     it("increments the size by one", () => {
       fc.assert(
@@ -36,25 +111,7 @@ describe("heap", () => {
           const clonedHeap = heap.clone();
 
           expect(clonedHeap.size).toBe(heap.size);
-
-          const originalMembers: number[] = [];
-          const clonedMembers: number[] = [];
-
-          while (heap.size > 0) {
-            const originalExtracted = heap.extract();
-            if (originalExtracted !== null) {
-              originalMembers.push(originalExtracted);
-            }
-          }
-
-          while (clonedHeap.size > 0) {
-            const clonedExtracted = clonedHeap.extract();
-            if (clonedExtracted !== null) {
-              clonedMembers.push(clonedExtracted);
-            }
-          }
-
-          expect(clonedMembers).toEqual(originalMembers);
+          expect(clonedHeap.members).toEqual(heap.members);
         }),
       );
     });

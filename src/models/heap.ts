@@ -9,6 +9,15 @@ class BinaryHeap<T = number> {
     this.compareFunction = compareFunction;
   }
 
+  get members(): T[][] {
+    return this.array.reduce<T[][]>((accumulator, member, i) => {
+      const memberRow = Math.floor(Math.log2(i + 1));
+      accumulator[memberRow] ??= [];
+      accumulator[memberRow].push(member);
+      return accumulator;
+    }, []);
+  }
+
   get size() {
     return this.array.length;
   }
