@@ -23,6 +23,83 @@ describe("heap", () => {
     });
   });
 
+  describe("clone", () => {
+    it("creates a new heap with the same members", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer()), (array) => {
+          const heap = new MinHeap();
+
+          array.forEach((member) => {
+            heap.insert(member);
+          });
+
+          const clonedHeap = heap.clone();
+
+          expect(clonedHeap.size).toBe(heap.size);
+
+          const originalMembers: number[] = [];
+          const clonedMembers: number[] = [];
+
+          while (heap.size > 0) {
+            const originalExtracted = heap.extract();
+            if (originalExtracted !== null) {
+              originalMembers.push(originalExtracted);
+            }
+          }
+
+          while (clonedHeap.size > 0) {
+            const clonedExtracted = clonedHeap.extract();
+            if (clonedExtracted !== null) {
+              clonedMembers.push(clonedExtracted);
+            }
+          }
+
+          expect(clonedMembers).toEqual(originalMembers);
+        }),
+      );
+    });
+    it("modifications to the cloned heap do not affect the original heap", () => {
+      fc.assert(
+        fc.property(
+          fc.array(fc.integer()),
+          fc.integer(),
+          (array, additionalInteger) => {
+            const heap = new MinHeap();
+
+            array.forEach((member) => {
+              heap.insert(member);
+            });
+            const clonedHeap = heap.clone();
+            clonedHeap.insert(additionalInteger);
+
+            expect(clonedHeap.size).toBe(heap.size + 1);
+            expect(heap.size).toBe(array.length);
+          },
+        ),
+      );
+    });
+    it("modifications to the original heap do not affect the cloned heap", () => {
+      fc.assert(
+        fc.property(
+          fc.array(fc.integer()),
+          fc.integer(),
+          (array, additionalInteger) => {
+            const heap = new MinHeap();
+
+            array.forEach((member) => {
+              heap.insert(member);
+            });
+            const clonedHeap = heap.clone();
+            heap.insert(additionalInteger);
+
+            expect(heap.size).toBe(clonedHeap.size + 1);
+            expect(clonedHeap.size).toBe(array.length);
+          },
+        ),
+      );
+    });
+  });
+
   describe("extract", () => {
     it("decrements the size by one", () => {
       fc.assert(
