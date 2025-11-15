@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { LinkedList } from "./linked-list";
 import fc from "fast-check";
 
