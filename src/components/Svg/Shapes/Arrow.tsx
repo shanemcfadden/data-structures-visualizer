@@ -1,7 +1,7 @@
 import type { Coordinate } from "../../../types";
 import { ARROW_HEAD_LENGTH, ARROW_HEAD_REF } from "../Defs/ArrowHead";
 
-type ArrowProps = {
+export type ArrowProps = {
   start: Coordinate;
   end: Coordinate;
   endPointer?: boolean;
