@@ -1,4 +1,4 @@
-export const MAX_RADIUS = 150;
+export const MAX_RADIUS = 100;
 export const MAX_SPACE_BETWEEN_CIRCLES = 300;
 
 export const PROPORTIONAL_SPACE_TO_RADIUS_RATIO = 1.1;

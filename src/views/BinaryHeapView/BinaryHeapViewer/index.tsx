@@ -10,11 +10,16 @@ import {
   DATA_STRUCTURE_CANVAS_WIDTH as WIDTH,
   DATA_STRUCTURE_CANVAS_HEIGHT as HEIGHT,
 } from "../../../components/DataStructureCanvas";
-
-const RADIUS = 50;
+import { MAX_RADIUS } from "./constants";
 
 export const BinaryHeapViewer = () => {
   const { heap } = useContext(BinaryHeapContext);
+
+  const maxLongestHeapRow = 2 ** (heap.members.length - 1);
+  const proportionalRadius = (WIDTH / (2 * maxLongestHeapRow)) * 0.8;
+
+  const radius = Math.min(proportionalRadius, MAX_RADIUS);
+
   const circleHeap: CircleProps[][] = heap.members.map((row, i) =>
     row.map((value, j) => {
       return {
@@ -22,7 +27,7 @@ export const BinaryHeapViewer = () => {
           WIDTH * ((2 * j + 1) / 2 ** (i + 1)),
           HEIGHT * ((i + 1) / (heap.members.length + 1)),
         ],
-        radius: RADIUS,
+        radius: radius,
         text: value.toString(),
       };
     }),
@@ -39,6 +44,7 @@ export const BinaryHeapViewer = () => {
         accumulator.push({
           start: parentCircle.center,
           end: childCircle.center,
+          strokeWidth: 8,
         });
       });
 
@@ -50,7 +56,7 @@ export const BinaryHeapViewer = () => {
   return (
     <DataStructureCanvas>
       {arrows.map((props, i) => (
-        <Arrow key={i} endPointer {...props} />
+        <Arrow key={i} {...props} />
       ))}
 
       {circleHeap.flat().map((props) => (
