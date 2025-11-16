@@ -13,10 +13,10 @@ export const BinaryHeapMethods = ({
       Methods
     </Heading>
     <Margin weight="small">
-      <Extract />
+      <Insert />
     </Margin>
     <Margin weight="small">
-      <Insert />
+      <Extract />
     </Margin>
   </div>
 );
