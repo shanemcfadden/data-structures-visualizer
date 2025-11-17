@@ -27,19 +27,17 @@ export const BinaryHeapViewer = () => {
   );
 
   const circleHeap: CircleProps[][] = heap.members.map((row, i) =>
-    row.map((value, j) => {
-      return {
-        center: [
-          WIDTH / 2 +
-            ((1 + 2 * j - 2 ** i) / 2 ** i) *
-              horizontalUnitFromCenter *
-              maxLongestHeapRow,
-          (i + 1) * verticalUnit,
-        ],
-        radius,
-        text: value.toString(),
-      };
-    }),
+    row.map((value, j) => ({
+      center: [
+        WIDTH / 2 +
+          ((1 + 2 * j - 2 ** i) / 2 ** i) *
+            horizontalUnitFromCenter *
+            maxLongestHeapRow,
+        (i + 1) * verticalUnit,
+      ],
+      radius,
+      text: value.toString(),
+    })),
   );
 
   const arrows: ArrowProps[] = circleHeap.reduce<ArrowProps[]>(
