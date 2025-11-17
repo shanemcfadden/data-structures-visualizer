@@ -1,3 +1,4 @@
+import { expect, describe, it } from "vitest";
 import { Queue } from "./queue";
 import fc from "fast-check";
 
