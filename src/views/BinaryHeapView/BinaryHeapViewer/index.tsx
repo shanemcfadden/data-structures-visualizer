@@ -31,9 +31,9 @@ export const BinaryHeapViewer = () => {
       return {
         center: [
           WIDTH / 2 +
-            horizontalUnitFromCenter *
-              maxLongestHeapRow *
-              ((1 + 2 * j - 2 ** i) / 2 ** i),
+            ((1 + 2 * j - 2 ** i) / 2 ** i) *
+              horizontalUnitFromCenter *
+              maxLongestHeapRow,
           (i + 1) * verticalUnit,
         ],
         radius,
