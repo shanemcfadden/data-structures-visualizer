@@ -20,14 +20,23 @@ export const BinaryHeapViewer = () => {
 
   const radius = Math.min(proportionalRadius, MAX_RADIUS);
 
+  const verticalUnit = HEIGHT / (heap.members.length + 1);
+  const horizontalUnitFromCenter = Math.min(
+    WIDTH / (2 * maxLongestHeapRow),
+    verticalUnit / Math.tan(Math.PI / 3),
+  );
+
   const circleHeap: CircleProps[][] = heap.members.map((row, i) =>
     row.map((value, j) => {
       return {
         center: [
-          WIDTH * ((2 * j + 1) / 2 ** (i + 1)),
-          HEIGHT * ((i + 1) / (heap.members.length + 1)),
+          WIDTH / 2 +
+            horizontalUnitFromCenter *
+              maxLongestHeapRow *
+              ((1 + 2 * j - 2 ** i) / 2 ** i),
+          (i + 1) * verticalUnit,
         ],
-        radius: radius,
+        radius,
         text: value.toString(),
       };
     }),
