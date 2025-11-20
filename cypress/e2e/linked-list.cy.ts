@@ -19,4 +19,3 @@ describe("linked list", () => {
       .should("contain", "0");
   });
 });
-
