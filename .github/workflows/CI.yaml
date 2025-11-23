@@ -27,7 +27,7 @@ jobs:
         with:
           name: build
           if-no-files-found: error
-          path: dist/${{ env.NEXT_PUBLIC_BASE_PATH }}
+          path: dist
   lint:
     name: Format/Lint
     runs-on: ubuntu-latest
@@ -106,12 +106,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build
-          path: dist/${{ env.NEXT_PUBLIC_BASE_PATH }}
+          path: dist
       - name: Upload build files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          path: dist/${{ env.NEXT_PUBLIC_BASE_PATH }}/
+          path: dist/
   deploy:
     name: Deploy
     if: github.ref == 'refs/heads/main'
