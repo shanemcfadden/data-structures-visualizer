@@ -14,7 +14,7 @@ export const QueueProperties = ({
       <Heading collapseTopMargin={collapseTopMargin} level={3}>
         Properties
       </Heading>
-      <div>Size: {queue.members.length}</div>
+      <div data-cy="queue-property-size">Size: {queue.members.length}</div>
     </div>
   );
 };

@@ -15,7 +15,7 @@ export const BinaryHeapProperties = ({
       <Heading collapseTopMargin={collapseTopMargin} level={3}>
         Properties
       </Heading>
-      <div>Size: {heap.size}</div>
+      <div data-cy="binary-heap-property-size">Size: {heap.size}</div>
     </div>
   );
 };

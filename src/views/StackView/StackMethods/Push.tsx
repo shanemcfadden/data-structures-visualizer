@@ -24,6 +24,7 @@ export const Push = () => {
 
   return (
     <Action
+      data-cy="stack-method-push"
       disabled={stack.members.length >= MAX_STACK_SIZE}
       input
       inputMode="numeric"

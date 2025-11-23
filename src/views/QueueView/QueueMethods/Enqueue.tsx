@@ -24,6 +24,7 @@ export const Enqueue = () => {
 
   return (
     <Action
+      data-cy="queue-method-enqueue"
       disabled={queue.members.length >= MAX_QUEUE_SIZE}
       input
       inputMode="numeric"

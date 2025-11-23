@@ -15,9 +15,13 @@ export const LinkedListProperties = ({
       <Heading collapseTopMargin={collapseTopMargin} level={3}>
         Properties
       </Heading>
-      <div>Head value: {head ?? "null"}</div>
-      <div>Tail value: {tail ?? "null"}</div>
-      <div>Length: {list.length}</div>
+      <div data-cy="linked-list-property-head">
+        Head value: {head ?? "null"}
+      </div>
+      <div data-cy="linked-list-property-tail">
+        Tail value: {tail ?? "null"}
+      </div>
+      <div data-cy="linked-list-property-length">Length: {list.length}</div>
     </div>
   );
 };

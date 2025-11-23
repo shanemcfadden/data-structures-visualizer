@@ -24,6 +24,7 @@ export const Insert = () => {
 
   return (
     <Action
+      data-cy="binary-heap-method-insert"
       disabled={heap.size >= MAX_BINARY_HEAP_SIZE}
       input
       inputMode="numeric"

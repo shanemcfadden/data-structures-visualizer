@@ -23,6 +23,7 @@ export const RemoveFirst = () => {
 
   return (
     <Action
+      data-cy="linked-list-method-remove-first"
       disabled={head === null}
       label="Remove First"
       onButtonClick={onButtonClick}

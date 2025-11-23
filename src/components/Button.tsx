@@ -2,11 +2,17 @@ import type { FormEventHandler, PropsWithChildren } from "react";
 import { joinClassNames } from "../util";
 
 export type ButtonProps = PropsWithChildren<{
+  "data-cy"?: string;
   disabled?: boolean;
   onSubmit: FormEventHandler<HTMLButtonElement>;
 }>;
 
-export const Button = ({ children, disabled, onSubmit }: ButtonProps) => (
+export const Button = ({
+  children,
+  "data-cy": dataCy,
+  disabled,
+  onSubmit,
+}: ButtonProps) => (
   <button
     className={joinClassNames(
       "bg-blue-700",
@@ -24,6 +30,7 @@ export const Button = ({ children, disabled, onSubmit }: ButtonProps) => (
       "rounded",
       "text-white",
     )}
+    data-cy={dataCy}
     disabled={disabled}
     onClick={onSubmit}
     type="button"

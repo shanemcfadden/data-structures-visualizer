@@ -5,12 +5,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "cy:open": "cypress open",
     "dev": "next dev",
     "build": "next build",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "serve": "serve dist",
     "test": "vitest"
   },
   "dependencies": {
@@ -32,6 +33,7 @@
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.1.1",
+    "cypress": "^15.7.0",
     "eslint": "^9.33.0",
     "eslint-config-next": "^16.0.1",
     "eslint-plugin-react-hooks": "^5.2.0",
@@ -40,6 +42,7 @@
     "globals": "^16.3.0",
     "jsdom": "^27.2.0",
     "prettier": "3.6.2",
+    "serve": "^14.2.5",
     "tailwindcss": "^4.1.16",
     "ts-node": "^10.9.2",
     "typescript": "~5.8.3",

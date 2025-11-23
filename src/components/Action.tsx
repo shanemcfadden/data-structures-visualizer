@@ -10,6 +10,7 @@ import { Button } from "./Button";
 import { TextInput } from "./TextInput";
 
 export type ActionProps = {
+  ["data-cy"]: string;
   disabled?: boolean;
   input?: boolean;
   inputMode?: HTMLAttributes<string>["inputMode"];
@@ -23,6 +24,7 @@ export type ActionProps = {
 
 export const Action = memo(
   ({
+    "data-cy": dataCy,
     disabled,
     input = false,
     inputMode,
@@ -72,6 +74,7 @@ export const Action = memo(
         {input && (
           <div className="mr-4">
             <TextInput
+              data-cy={`${dataCy}-input`}
               disabled={disabled}
               inputMode={inputMode}
               placeholder={inputPlaceholder}
@@ -81,11 +84,15 @@ export const Action = memo(
             />
           </div>
         )}
-        <Button disabled={disabled} onSubmit={onButtonClick}>
+        <Button
+          data-cy={`${dataCy}-button`}
+          disabled={disabled}
+          onSubmit={onButtonClick}
+        >
           {label}
         </Button>
         {result && (
-          <div>
+          <div data-cy={`${dataCy}-result`}>
             {resultLabel || "Result"}: {result}
           </div>
         )}

@@ -23,6 +23,7 @@ export const Pop = () => {
 
   return (
     <Action
+      data-cy="stack-method-pop"
       disabled={stack.members.length === 0}
       label="Pop"
       onButtonClick={onButtonClick}
