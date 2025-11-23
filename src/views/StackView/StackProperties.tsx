@@ -14,7 +14,7 @@ export const StackProperties = ({
       <Heading collapseTopMargin={collapseTopMargin} level={3}>
         Properties
       </Heading>
-      <div>Size: {stack.members.length}</div>
+      <div data-cy="stack-property-size">Size: {stack.members.length}</div>
     </div>
   );
 };
