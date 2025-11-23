@@ -23,6 +23,7 @@ export const Extract = () => {
 
   return (
     <Action
+      data-cy="binary-heap-method-extract"
       disabled={heap.size === 0}
       label="Extract"
       onButtonClick={onButtonClick}
