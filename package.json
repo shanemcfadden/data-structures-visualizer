@@ -11,7 +11,7 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "serve": "serve dist",
     "test": "vitest"
   },
   "dependencies": {
@@ -42,6 +42,7 @@
     "globals": "^16.3.0",
     "jsdom": "^27.2.0",
     "prettier": "3.6.2",
+    "serve": "^14.2.5",
     "tailwindcss": "^4.1.16",
     "ts-node": "^10.9.2",
     "typescript": "~5.8.3",
