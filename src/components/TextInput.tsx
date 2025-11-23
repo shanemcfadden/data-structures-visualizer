@@ -6,6 +6,7 @@ import type {
 import { joinClassNames } from "../util";
 
 export type TextInputProps = {
+  "data-cy"?: string;
   disabled?: boolean;
   inputMode?: HTMLAttributes<string>["inputMode"];
   onChange: ChangeEventHandler<HTMLInputElement>;
@@ -15,6 +16,7 @@ export type TextInputProps = {
 };
 
 export const TextInput = ({
+  "data-cy": dataCy,
   disabled,
   inputMode,
   onChange,
@@ -34,6 +36,7 @@ export const TextInput = ({
       "rounded",
       "w-full",
     )}
+    data-cy={dataCy}
     disabled={disabled}
     inputMode={inputMode}
     onChange={onChange}

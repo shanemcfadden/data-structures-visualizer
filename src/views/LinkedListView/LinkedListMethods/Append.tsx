@@ -24,6 +24,7 @@ export const Append = () => {
 
   return (
     <Action
+      data-cy="linked-list-method-append"
       disabled={list.length >= MAX_LINKED_LIST_LENGTH}
       input
       inputMode="numeric"

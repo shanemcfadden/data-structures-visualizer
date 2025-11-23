@@ -24,6 +24,7 @@ export const Prepend = () => {
 
   return (
     <Action
+      data-cy="linked-list-method-prepend"
       disabled={list.length >= MAX_LINKED_LIST_LENGTH}
       input
       inputMode="numeric"

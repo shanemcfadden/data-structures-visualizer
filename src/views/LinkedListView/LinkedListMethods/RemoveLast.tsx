@@ -23,6 +23,7 @@ export const RemoveLast = () => {
 
   return (
     <Action
+      data-cy="linked-list-method-remove-last"
       disabled={tail === null}
       label="Remove Last"
       onButtonClick={onClick}
