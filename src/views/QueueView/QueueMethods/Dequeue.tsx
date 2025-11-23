@@ -23,6 +23,7 @@ export const Dequeue = () => {
 
   return (
     <Action
+      data-cy="queue-method-dequeue"
       disabled={queue.members.length === 0}
       label="Dequeue"
       onButtonClick={onButtonClick}
