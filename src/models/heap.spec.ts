@@ -96,6 +96,27 @@ describe("heap", () => {
         }),
       );
     });
+    it("maintains branch ordering on insert", () => {
+      fc.assert(
+        fc.property(fc.integer({ min: 1, max: 8 }), (heapRows) => {
+          const heap = new MinHeap();
+
+          for (let i = 0; i < heapRows; i++) {
+            const numberOfMembersInRow = 2 ** i;
+
+            for (let j = 0; j < numberOfMembersInRow; j++) {
+              heap.insert(j);
+            }
+          }
+
+          const members = heap.members;
+
+          members.forEach((row) => {
+            expect(row[0]).toBe(0);
+          });
+        }),
+      );
+    });
   });
 
   describe("clone", () => {

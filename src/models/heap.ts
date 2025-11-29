@@ -123,7 +123,7 @@ class BinaryHeap<T = number> {
     if (i === 0) {
       return null;
     }
-    return Math.floor(i - 1 / 2);
+    return Math.floor((i - 1) / 2);
   }
 }
 
