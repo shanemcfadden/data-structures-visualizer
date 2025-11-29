@@ -18,8 +18,11 @@ describe("Binary Heap Workflow", () => {
 
       cy.get(dataCy`binary-heap-method-extract-button`).should("be.disabled");
 
+      cy.get(dataCy`binary-heap-method-insert-button`).should("be.disabled");
       cy.get(dataCy`binary-heap-method-insert-input`).type("10");
-      cy.get(dataCy`binary-heap-method-insert-button`).click();
+      cy.get(dataCy`binary-heap-method-insert-button`)
+        .should("not.be.disabled")
+        .click();
 
       cy.get(dataCy`binary-heap-property-size`)
         .should("contain", "Size")

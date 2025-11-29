@@ -18,8 +18,11 @@ describe("Queue Workflow", () => {
 
       cy.get(dataCy`queue-method-dequeue-button`).should("be.disabled");
 
+      cy.get(dataCy`queue-method-enqueue-button`).should("be.disabled");
       cy.get(dataCy`queue-method-enqueue-input`).type("10");
-      cy.get(dataCy`queue-method-enqueue-button`).click();
+      cy.get(dataCy`queue-method-enqueue-button`)
+        .should("not.be.disabled")
+        .click();
 
       cy.get(dataCy`queue-property-size`)
         .should("contain", "Size")
