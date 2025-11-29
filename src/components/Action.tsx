@@ -69,6 +69,8 @@ export const Action = memo(
       [onButtonClick],
     );
 
+    const isInputEmpty = input && inputValue.length === 0;
+
     return (
       <div className="flex justify-between items-center">
         {input && (
@@ -86,7 +88,7 @@ export const Action = memo(
         )}
         <Button
           data-cy={`${dataCy}-button`}
-          disabled={disabled}
+          disabled={disabled || isInputEmpty}
           onSubmit={onButtonClick}
         >
           {label}

@@ -18,8 +18,11 @@ describe("Stack Workflow", () => {
 
       cy.get(dataCy`stack-method-pop-button`).should("be.disabled");
 
+      cy.get(dataCy`stack-method-push-button`).should("be.disabled");
       cy.get(dataCy`stack-method-push-input`).type("10");
-      cy.get(dataCy`stack-method-push-button`).click();
+      cy.get(dataCy`stack-method-push-button`)
+        .should("not.be.disabled")
+        .click();
 
       cy.get(dataCy`stack-property-size`)
         .should("contain", "Size")

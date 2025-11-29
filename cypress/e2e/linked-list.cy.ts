@@ -29,8 +29,11 @@ describe("Linked List Workflow", () => {
         "be.disabled",
       );
 
+      cy.get(dataCy`linked-list-method-append-button`).should("be.disabled");
       cy.get(dataCy`linked-list-method-append-input`).type("10");
-      cy.get(dataCy`linked-list-method-append-button`).click();
+      cy.get(dataCy`linked-list-method-append-button`)
+        .should("not.be.disabled")
+        .click();
 
       cy.get(dataCy`linked-list-property-head`)
         .should("contain", "Head")
