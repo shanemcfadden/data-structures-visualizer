@@ -20,7 +20,7 @@
     "@fortawesome/react-fontawesome": "^3.1.0",
     "data-structures-visualizer": "link:",
     "lodash-es": "^4.17.21",
-    "next": "^16.0.1",
+    "next": "^16.0.7",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
