@@ -240,4 +240,45 @@ describe("binary search tree", () => {
       );
     });
   });
+
+  describe("structure", () => {
+    it("All left values are less than or equal to the root", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer(), { minLength: 1 }), (array) => {
+          const tree = new BinarySearchTree();
+
+          array.forEach((member) => {
+            tree.insert(member);
+          });
+          const [rootValue, ..._rest] = array;
+
+          const treeContents = tree.contents;
+          const leftValues = BinarySearchTree.fromContents(
+            treeContents?.left ?? null,
+          ).orderedValues;
+
+          expect(leftValues.every((value) => value <= rootValue)).toBe(true);
+        }),
+      );
+    });
+    it("All right values are greater than or equal to the root", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer(), { minLength: 1 }), (array) => {
+          const tree = new BinarySearchTree();
+
+          array.forEach((member) => {
+            tree.insert(member);
+          });
+          const [rootValue, ..._rest] = array;
+
+          const treeContents = tree.contents;
+          const rightValues = BinarySearchTree.fromContents(
+            treeContents?.right ?? null,
+          ).orderedValues;
+
+          expect(rightValues.every((value) => value >= rootValue)).toBe(true);
+        }),
+      );
+    });
+  });
 });
