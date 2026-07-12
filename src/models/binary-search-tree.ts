@@ -1,3 +1,5 @@
+import assert from "assert";
+
 export class BinarySearchTree<T = number> {
   private root: BinarySearchNode<T> | null;
 
@@ -41,6 +43,30 @@ export class BinarySearchTree<T = number> {
     return allValues;
   }
 
+  static fromContents<T>(
+    contents: IBinarySearchNode<T> | null,
+  ): BinarySearchTree<T> {
+    const tree = new BinarySearchTree<T>();
+
+    const insertNodes = (node: IBinarySearchNode<T> | null): void => {
+      if (!node) {
+        return;
+      }
+
+      tree.insert(node.value);
+      insertNodes(node.left);
+      insertNodes(node.right);
+    };
+
+    insertNodes(contents);
+
+    return tree;
+  }
+
+  public clone(): BinarySearchTree<T> {
+    return BinarySearchTree.fromContents(this.contents);
+  }
+
   public insert(value: T) {
     if (!this.root) {
       this.root = new BinarySearchNode(value);
@@ -72,22 +98,27 @@ export class BinarySearchTree<T = number> {
     } else {
       const { successor } = nodeToRemove;
 
-      if (!successor) {
-        throw new Error(
-          "Successor not found on node with right. This should not be possible",
-        );
-      }
+      assert(
+        successor,
+        "Successor not found on node with right. This should not be possible.",
+      );
 
       if (successor === nodeToRemove.right) {
+        nodeToRemove.right.left = nodeToRemove.left;
         replaceNodeToRemove(nodeToRemove.right);
+      } else {
+        const minimumChildOfRight = nodeToRemove.right.extractMinimumChild();
+
+        assert(
+          minimumChildOfRight,
+          "Minimum child of right not found when node's successor does not equal right. This should not be possible.",
+        );
+
+        minimumChildOfRight.left = nodeToRemove.left;
+        minimumChildOfRight.right = nodeToRemove.right;
+
+        replaceNodeToRemove(minimumChildOfRight);
       }
-
-      const minimumChildOfRight = nodeToRemove.right.extractMinimumChild();
-
-      minimumChildOfRight!.left = nodeToRemove.left;
-      minimumChildOfRight!.right = nodeToRemove.right;
-
-      replaceNodeToRemove(minimumChildOfRight);
     }
     return true;
   }
@@ -120,7 +151,7 @@ export class BinarySearchTree<T = number> {
           return null;
         }
 
-        if (value === parent.left) {
+        if (value === parent.left.value) {
           return {
             node: parent.left,
             replaceNode: (replacement) => {
@@ -136,7 +167,7 @@ export class BinarySearchTree<T = number> {
         return null;
       }
 
-      if (value === parent.right) {
+      if (value === parent.right.value) {
         return {
           node: parent.right,
           replaceNode: (replacement) => {
