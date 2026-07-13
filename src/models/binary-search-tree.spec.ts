@@ -140,8 +140,8 @@ describe("binary search tree", () => {
     });
   });
 
-  describe("remove", () => {
-    it("removes indicated value when it exists", () => {
+  describe("delete", () => {
+    it("deletes indicated value when it exists", () => {
       fc.assert(
         fc.property(fc.uniqueArray(fc.integer(), { minLength: 1 }), (array) => {
           const tree = new BinarySearchTree();
@@ -149,14 +149,14 @@ describe("binary search tree", () => {
           array.forEach((member) => {
             tree.insert(member);
           });
-          const [valueToRemove, ..._rest] = array;
+          const [valueToDelete, ..._rest] = array;
 
-          tree.remove(valueToRemove);
-          expect(tree.has(valueToRemove)).toBe(false);
+          tree.delete(valueToDelete);
+          expect(tree.has(valueToDelete)).toBe(false);
         }),
       );
     });
-    it("lowers number of values by 1 when the removed value exists", () => {
+    it("lowers number of values by 1 when the deleted value exists", () => {
       fc.assert(
         fc.property(fc.array(fc.integer(), { minLength: 1 }), (array) => {
           const tree = new BinarySearchTree();
@@ -165,15 +165,15 @@ describe("binary search tree", () => {
             tree.insert(member);
           });
 
-          const [valueToRemove, ...remainingValues] = array;
+          const [valueToDelete, ...remainingValues] = array;
 
-          tree.remove(valueToRemove);
+          tree.delete(valueToDelete);
 
           expect(tree.orderedValues.length).toBe(remainingValues.length);
         }),
       );
     });
-    it("yields true when removed value exists", () => {
+    it("yields true when deleted value exists", () => {
       fc.assert(
         fc.property(fc.array(fc.integer(), { minLength: 1 }), (array) => {
           const tree = new BinarySearchTree();
@@ -181,14 +181,14 @@ describe("binary search tree", () => {
           array.forEach((member) => {
             tree.insert(member);
           });
-          const [valueToRemove, ..._rest] = array;
+          const [valueToDelete, ..._rest] = array;
 
-          const result = tree.remove(valueToRemove);
+          const result = tree.delete(valueToDelete);
           expect(result).toBe(true);
         }),
       );
     });
-    it("ordered values remain ordered after removal", () => {
+    it("ordered values remain ordered after deletion", () => {
       fc.assert(
         fc.property(fc.array(fc.integer(), { minLength: 1 }), (array) => {
           const tree = new BinarySearchTree();
@@ -196,16 +196,16 @@ describe("binary search tree", () => {
           array.forEach((member) => {
             tree.insert(member);
           });
-          const [valueToRemove, ...remainingValues] = array;
+          const [valueToDelete, ...remainingValues] = array;
 
-          tree.remove(valueToRemove);
+          tree.delete(valueToDelete);
 
           remainingValues.sort((a, b) => a - b);
           expect(tree.orderedValues).toEqual(remainingValues);
         }),
       );
     });
-    it("yields false when removed value does not exist", () => {
+    it("yields false when deleted value does not exist", () => {
       fc.assert(
         fc.property(fc.uniqueArray(fc.integer(), { minLength: 2 }), (array) => {
           const tree = new BinarySearchTree();
@@ -215,7 +215,7 @@ describe("binary search tree", () => {
             tree.insert(member);
           });
 
-          const result = tree.remove(valueToOmit);
+          const result = tree.delete(valueToOmit);
           expect(result).toBe(false);
         }),
       );
@@ -232,7 +232,7 @@ describe("binary search tree", () => {
 
           const initialNumberOfContents = tree.orderedValues.length;
 
-          tree.remove(valueToOmit);
+          tree.delete(valueToOmit);
 
           const updatedNumberOfContents = tree.orderedValues.length;
           expect(initialNumberOfContents).toBe(updatedNumberOfContents);

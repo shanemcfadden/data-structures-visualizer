@@ -1,16 +1,16 @@
 import assert from "assert";
 
-export class BinarySearchTree<T = number> {
-  private root: BinarySearchNode<T> | null;
+export class BinarySearchTree {
+  private root: BinarySearchNode | null;
 
   constructor() {
     this.root = null;
   }
 
-  get contents(): IBinarySearchNode<T> | null {
+  get contents(): IBinarySearchNode | null {
     const toInterface = (
-      nodeOrNull: BinarySearchNode<T> | null,
-    ): IBinarySearchNode<T> | null => {
+      nodeOrNull: BinarySearchNode | null,
+    ): IBinarySearchNode | null => {
       if (nodeOrNull === null) {
         return null;
       }
@@ -25,10 +25,10 @@ export class BinarySearchTree<T = number> {
     return toInterface(this.root);
   }
 
-  get orderedValues(): T[] {
-    const allValues: T[] = [];
+  get orderedValues(): number[] {
+    const allValues: number[] = [];
 
-    const traverseNodes = (nodeOrNull: BinarySearchNode<T> | null): void => {
+    const traverseNodes = (nodeOrNull: BinarySearchNode | null): void => {
       if (!nodeOrNull) {
         return;
       }
@@ -43,12 +43,10 @@ export class BinarySearchTree<T = number> {
     return allValues;
   }
 
-  static fromContents<T>(
-    contents: IBinarySearchNode<T> | null,
-  ): BinarySearchTree<T> {
-    const tree = new BinarySearchTree<T>();
+  static fromContents(contents: IBinarySearchNode | null): BinarySearchTree {
+    const tree = new BinarySearchTree();
 
-    const insertNodes = (node: IBinarySearchNode<T> | null): void => {
+    const insertNodes = (node: IBinarySearchNode | null): void => {
       if (!node) {
         return;
       }
@@ -63,11 +61,11 @@ export class BinarySearchTree<T = number> {
     return tree;
   }
 
-  public clone(): BinarySearchTree<T> {
+  public clone(): BinarySearchTree {
     return BinarySearchTree.fromContents(this.contents);
   }
 
-  public insert(value: T) {
+  public insert(value: number) {
     if (!this.root) {
       this.root = new BinarySearchNode(value);
     } else {
@@ -75,57 +73,57 @@ export class BinarySearchTree<T = number> {
     }
   }
 
-  public has(value: T): boolean {
+  public has(value: number): boolean {
     return Boolean(this.findNodeAndNodeSetter(value));
   }
 
-  public remove(value: T): boolean {
-    const nodeToRemoveAndNodeSetter = this.findNodeAndNodeSetter(value);
+  public delete(value: number): boolean {
+    const nodeToDeleteAndNodeSetter = this.findNodeAndNodeSetter(value);
 
-    if (!nodeToRemoveAndNodeSetter) {
+    if (!nodeToDeleteAndNodeSetter) {
       return false;
     }
 
-    const { node: nodeToRemove, replaceNode: replaceNodeToRemove } =
-      nodeToRemoveAndNodeSetter;
+    const { node: nodeToDelete, replaceNode: replaceNodeToDelete } =
+      nodeToDeleteAndNodeSetter;
 
-    if (nodeToRemove.isLeaf) {
-      replaceNodeToRemove(null);
-    } else if (!nodeToRemove.left) {
-      replaceNodeToRemove(nodeToRemove.right);
-    } else if (!nodeToRemove.right) {
-      replaceNodeToRemove(nodeToRemove.left);
+    if (nodeToDelete.isLeaf) {
+      replaceNodeToDelete(null);
+    } else if (!nodeToDelete.left) {
+      replaceNodeToDelete(nodeToDelete.right);
+    } else if (!nodeToDelete.right) {
+      replaceNodeToDelete(nodeToDelete.left);
     } else {
-      const { successor } = nodeToRemove;
+      const { successor } = nodeToDelete;
 
       assert(
         successor,
         "Successor not found on node with right. This should not be possible.",
       );
 
-      if (successor === nodeToRemove.right) {
-        nodeToRemove.right.left = nodeToRemove.left;
-        replaceNodeToRemove(nodeToRemove.right);
+      if (successor === nodeToDelete.right) {
+        nodeToDelete.right.left = nodeToDelete.left;
+        replaceNodeToDelete(nodeToDelete.right);
       } else {
-        const minimumChildOfRight = nodeToRemove.right.extractMinimumChild();
+        const minimumChildOfRight = nodeToDelete.right.extractMinimumChild();
 
         assert(
           minimumChildOfRight,
           "Minimum child of right not found when node's successor does not equal right. This should not be possible.",
         );
 
-        minimumChildOfRight.left = nodeToRemove.left;
-        minimumChildOfRight.right = nodeToRemove.right;
+        minimumChildOfRight.left = nodeToDelete.left;
+        minimumChildOfRight.right = nodeToDelete.right;
 
-        replaceNodeToRemove(minimumChildOfRight);
+        replaceNodeToDelete(minimumChildOfRight);
       }
     }
     return true;
   }
 
-  private findNodeAndNodeSetter(value: T): {
-    node: BinarySearchNode<T>;
-    replaceNode: (replacement: BinarySearchNode<T> | null) => void;
+  private findNodeAndNodeSetter(value: number): {
+    node: BinarySearchNode;
+    replaceNode: (replacement: BinarySearchNode | null) => void;
   } | null {
     if (this.root === null) {
       return null;
@@ -141,10 +139,10 @@ export class BinarySearchTree<T = number> {
     }
 
     const findNodeAndNodeSetterFromParentNode = (
-      parent: BinarySearchNode<T>,
+      parent: BinarySearchNode,
     ): {
-      node: BinarySearchNode<T>;
-      replaceNode: (node: BinarySearchNode<T> | null) => void;
+      node: BinarySearchNode;
+      replaceNode: (node: BinarySearchNode | null) => void;
     } | null => {
       if (value < parent.value) {
         if (parent.left === null) {
@@ -183,18 +181,18 @@ export class BinarySearchTree<T = number> {
   }
 }
 
-interface IBinarySearchNode<T> {
-  value: T;
-  left: IBinarySearchNode<T> | null;
-  right: IBinarySearchNode<T> | null;
+interface IBinarySearchNode {
+  value: number;
+  left: IBinarySearchNode | null;
+  right: IBinarySearchNode | null;
 }
 
-class BinarySearchNode<T> implements IBinarySearchNode<T> {
-  public value: T;
-  public left: BinarySearchNode<T> | null;
-  public right: BinarySearchNode<T> | null;
+class BinarySearchNode implements IBinarySearchNode {
+  public value: number;
+  public left: BinarySearchNode | null;
+  public right: BinarySearchNode | null;
 
-  constructor(value: T) {
+  constructor(value: number) {
     this.value = value;
     this.left = null;
     this.right = null;
@@ -204,22 +202,22 @@ class BinarySearchNode<T> implements IBinarySearchNode<T> {
     return this.left === null && this.right === null;
   }
 
-  get maxNode(): BinarySearchNode<T> {
+  get maxNode(): BinarySearchNode {
     return this.right?.maxNode ?? this;
   }
 
-  get minNode(): BinarySearchNode<T> {
+  get minNode(): BinarySearchNode {
     return this.left?.minNode ?? this;
   }
 
-  get predecessor(): BinarySearchNode<T> | null {
+  get predecessor(): BinarySearchNode | null {
     return this.left?.maxNode ?? null;
   }
-  get successor(): BinarySearchNode<T> | null {
+  get successor(): BinarySearchNode | null {
     return this.right?.minNode ?? null;
   }
 
-  extractMinimumChild(): BinarySearchNode<T> | null {
+  extractMinimumChild(): BinarySearchNode | null {
     if (!this.left) {
       return null;
     }
@@ -234,7 +232,7 @@ class BinarySearchNode<T> implements IBinarySearchNode<T> {
     return minChild;
   }
 
-  insert(value: T) {
+  insert(value: number) {
     if (this.value > value) {
       if (this.left) {
         this.left.insert(value);

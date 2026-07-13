@@ -1,0 +1,1 @@
+export const MAX_BINARY_SEARCH_TREE_SIZE = 31;

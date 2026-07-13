@@ -16,9 +16,13 @@ export const Extract = () => {
   );
 
   const result = useMemo(() => {
+    const label = "Extracted";
+
     if (actionResult?.type === "EXTRACT") {
-      return nullableNumberToString(actionResult.value);
+      return { label, value: nullableNumberToString(actionResult.value) };
     }
+
+    return { label };
   }, [actionResult]);
 
   return (
@@ -28,7 +32,6 @@ export const Extract = () => {
       label="Extract"
       onButtonClick={onButtonClick}
       result={result}
-      resultLabel="Extracted"
     />
   );
 };

@@ -8,6 +8,7 @@ import {
 } from "react";
 import { Button } from "./Button";
 import { TextInput } from "./TextInput";
+import { Margin } from "./Margin";
 
 export type ActionProps = {
   ["data-cy"]: string;
@@ -18,8 +19,10 @@ export type ActionProps = {
   inputPattern?: RegExp;
   label: string;
   onButtonClick: (input?: string) => void;
-  result?: string;
-  resultLabel?: string;
+  result?: {
+    label: string;
+    value?: string;
+  };
 };
 
 export const Action = memo(
@@ -33,7 +36,6 @@ export const Action = memo(
     label,
     onButtonClick: onButtonClickRaw,
     result,
-    resultLabel,
   }: ActionProps) => {
     const [inputValue, setInputValue] = useState<string>("");
 
@@ -72,31 +74,44 @@ export const Action = memo(
     const isInputEmpty = input && inputValue.length === 0;
 
     return (
-      <div className="flex justify-between items-center">
-        {input && (
-          <div className="mr-4">
-            <TextInput
-              data-cy={`${dataCy}-input`}
-              disabled={disabled}
-              inputMode={inputMode}
-              placeholder={inputPlaceholder}
-              value={inputValue}
-              onChange={onChange}
-              onKeyDown={onKeyDown}
-            />
-          </div>
-        )}
-        <Button
-          data-cy={`${dataCy}-button`}
-          disabled={disabled || isInputEmpty}
-          onSubmit={onButtonClick}
-        >
-          {label}
-        </Button>
-        {result && (
-          <div data-cy={`${dataCy}-result`}>
-            {resultLabel || "Result"}: {result}
-          </div>
+      <div>
+        <div className="flex justify-between items-center">
+          {input && (
+            <div className="mr-4">
+              <TextInput
+                data-cy={`${dataCy}-input`}
+                disabled={disabled}
+                inputMode={inputMode}
+                placeholder={inputPlaceholder}
+                value={inputValue}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+              />
+            </div>
+          )}
+          <Button
+            data-cy={`${dataCy}-button`}
+            disabled={disabled || isInputEmpty}
+            onSubmit={onButtonClick}
+          >
+            {label}
+          </Button>
+          {!input && result?.value && (
+            <div data-cy={`${dataCy}-result`}>
+              {result.label}: {result.value}
+            </div>
+          )}
+        </div>
+        {input && result && (
+          <Margin weight="small" collapseBottom>
+            {result.value ? (
+              <div data-cy={`${dataCy}-result`}>
+                {result.label}: {result.value}
+              </div>
+            ) : (
+              <div>&nbsp;</div>
+            )}
+          </Margin>
         )}
       </div>
     );

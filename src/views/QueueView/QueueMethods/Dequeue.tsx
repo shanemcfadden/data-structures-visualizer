@@ -16,9 +16,13 @@ export const Dequeue = () => {
   );
 
   const result = useMemo(() => {
+    const label = "Dequeued";
+
     if (queue.actionResult?.type === "DEQUEUE") {
-      return nullableNumberToString(queue.actionResult.value);
+      return { label, value: nullableNumberToString(queue.actionResult.value) };
     }
+
+    return { label };
   }, [queue]);
 
   return (
@@ -28,7 +32,6 @@ export const Dequeue = () => {
       label="Dequeue"
       onButtonClick={onButtonClick}
       result={result}
-      resultLabel="Dequeued"
     />
   );
 };
