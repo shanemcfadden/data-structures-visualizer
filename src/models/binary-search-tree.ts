@@ -1,5 +1,3 @@
-import assert from "assert";
-
 export class BinarySearchTree {
   private root: BinarySearchNode | null;
 
@@ -96,10 +94,11 @@ export class BinarySearchTree {
     } else {
       const { successor } = nodeToDelete;
 
-      assert(
-        successor,
-        "Successor not found on node with right. This should not be possible.",
-      );
+      if (!successor) {
+        throw new Error(
+          "Successor not found on node with right. This should not be possible.",
+        );
+      }
 
       if (successor === nodeToDelete.right) {
         nodeToDelete.right.left = nodeToDelete.left;
@@ -107,10 +106,11 @@ export class BinarySearchTree {
       } else {
         const minimumChildOfRight = nodeToDelete.right.extractMinimumChild();
 
-        assert(
-          minimumChildOfRight,
-          "Minimum child of right not found when node's successor does not equal right. This should not be possible.",
-        );
+        if (!minimumChildOfRight) {
+          throw new Error(
+            "Minimum child of right not found when node's successor does not equal right. This should not be possible.",
+          );
+        }
 
         minimumChildOfRight.left = nodeToDelete.left;
         minimumChildOfRight.right = nodeToDelete.right;
