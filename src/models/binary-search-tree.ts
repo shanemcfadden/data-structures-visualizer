@@ -181,10 +181,10 @@ export class BinarySearchTree {
   }
 }
 
-interface IBinarySearchNode {
-  value: number;
-  left: IBinarySearchNode | null;
-  right: IBinarySearchNode | null;
+export interface IBinarySearchNode<T = number> {
+  value: T;
+  left: IBinarySearchNode<T> | null;
+  right: IBinarySearchNode<T> | null;
 }
 
 class BinarySearchNode implements IBinarySearchNode {
