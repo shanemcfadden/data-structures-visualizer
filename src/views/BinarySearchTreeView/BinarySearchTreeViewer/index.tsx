@@ -1,9 +1,5 @@
 import { useContext } from "react";
-// import { Arrow, type ArrowProps } from "../../../components/Svg/Shapes/Arrow";
-// import {
-//   Circle,
-//   type CircleProps,
-// } from "../../../components/Svg/Shapes/Circle";
+import { Arrow, type ArrowProps } from "../../../components/Svg/Shapes/Arrow";
 import { BinarySearchTreeContext } from "../state/context";
 import type { IBinarySearchNode } from "../../../models/binary-search-tree";
 import {
@@ -120,37 +116,123 @@ const toTreeMetadata = (
   };
 };
 
-const toCoordinates = (tree: {
+const toHorizontalGaps = (numberOfMembers: number) =>
+  WIDTH / (numberOfMembers + 1);
+
+const toVerticalGaps = (maxDepth: number) => HEIGHT / (maxDepth + 2);
+
+const toCoordinateTree = (tree: {
   metadata: TreeMetadata;
   mappedTree: IBinarySearchNode<ValueWithPosition> | null;
-}): { coordinate: Coordinate; text: string }[] => {
-  const coordinates: { coordinate: Coordinate; text: string }[] = [];
+}): IBinarySearchNode<{
+  coordinate: Coordinate;
+  radius: number;
+  text: string;
+}> | null => {
+  const horizontalGap = toHorizontalGaps(tree.metadata.numberOfMembers);
+  const verticalGap = toVerticalGaps(tree.metadata.maxDepth);
 
-  const traverse = (
+  const proportionalRadius =
+    Math.sqrt(horizontalGap ** 2 + verticalGap ** 2) / 4;
+
+  const toCoordinateTreeNode = (
     node: IBinarySearchNode<{
       depth: number;
       horizontalIndex: number;
       value: number;
+    }> | null,
+  ): IBinarySearchNode<{
+    coordinate: Coordinate;
+    radius: number;
+    text: string;
+  }> | null => {
+    if (!node) {
+      return null;
+    }
+    const x = (node.value.horizontalIndex + 1) * horizontalGap;
+    const y = (node.value.depth + 1) * verticalGap;
+
+    return {
+      value: {
+        coordinate: [x, y],
+        text: node.value.value.toString(),
+        radius: proportionalRadius,
+      },
+      left: toCoordinateTreeNode(node.left),
+      right: toCoordinateTreeNode(node.right),
+    };
+  };
+
+  return toCoordinateTreeNode(tree.mappedTree);
+};
+
+const toCoordinates = (
+  tree: IBinarySearchNode<{
+    coordinate: Coordinate;
+    radius: number;
+    text: string;
+  }> | null,
+): { coordinate: Coordinate; radius: number; text: string }[] => {
+  const coordinates: {
+    coordinate: Coordinate;
+    radius: number;
+    text: string;
+  }[] = [];
+
+  const traverse = (
+    node: IBinarySearchNode<{
+      coordinate: Coordinate;
+      radius: number;
+      text: string;
     }> | null,
   ): void => {
     if (!node) {
       return;
     }
 
-    const x =
-      WIDTH *
-      ((node.value.horizontalIndex + 1) / (tree.metadata.numberOfMembers + 1));
-    const y = HEIGHT * ((node.value.depth + 1) / (tree.metadata.maxDepth + 2));
-
-    coordinates.push({ coordinate: [x, y], text: node.value.value.toString() });
+    coordinates.push(node.value);
 
     traverse(node.left);
     traverse(node.right);
   };
 
-  traverse(tree.mappedTree);
+  traverse(tree);
 
   return coordinates;
+};
+
+const toArrows = (
+  tree: IBinarySearchNode<{ coordinate: Coordinate; text: string }> | null,
+): { start: Coordinate; end: Coordinate }[] => {
+  const arrows: { start: Coordinate; end: Coordinate }[] = [];
+
+  const traverse = (
+    node: IBinarySearchNode<{ coordinate: Coordinate; text: string }> | null,
+  ): void => {
+    if (!node) {
+      return;
+    }
+
+    if (node.left) {
+      arrows.push({
+        start: node.value.coordinate,
+        end: node.left.value.coordinate,
+      });
+    }
+    if (node.right) {
+      arrows.push({
+        start: node.value.coordinate,
+        end: node.right.value.coordinate,
+      });
+    }
+
+    traverse(node.left);
+    traverse(node.right);
+  };
+
+  traverse(tree);
+
+  return arrows;
 };
 
 export const BinarySearchTreeViewer = () => {
@@ -158,7 +240,9 @@ export const BinarySearchTreeViewer = () => {
 
   const treeWithMetadata = toTreeMetadata(tree.contents);
 
-  const coordinates = toCoordinates(treeWithMetadata);
+  const coordinateTree = toCoordinateTree(treeWithMetadata);
+  const coordinates = toCoordinates(coordinateTree);
+  const arrows = toArrows(coordinateTree);
 
   // const { heap } = useContext(BinarySearchTreeContext);
   //
@@ -208,12 +292,12 @@ export const BinarySearchTreeViewer = () => {
   // );
   return (
     <DataStructureCanvas>
-      {/* {arrows.map((props, i) => ( */}
-      {/*   <Arrow key={i} {...props} /> */}
-      {/* ))} */}
+      {arrows.map((props, i) => (
+        <Arrow key={i} {...props} />
+      ))}
 
-      {coordinates.map(({ coordinate, text }) => {
-        const radius = MAX_RADIUS;
+      {coordinates.map(({ coordinate, radius, text }) => {
+        // const radius = MAX_RADIUS;
         return (
           <Circle
             key={JSON.stringify(coordinate)}
