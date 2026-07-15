@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Arrow, type ArrowProps } from "../../../components/Svg/Shapes/Arrow";
+import { Arrow } from "../../../components/Svg/Shapes/Arrow";
 import { BinarySearchTreeContext } from "../state/context";
 import type { IBinarySearchNode } from "../../../models/binary-search-tree";
 import {
@@ -7,10 +7,9 @@ import {
   DATA_STRUCTURE_CANVAS_WIDTH as WIDTH,
   DATA_STRUCTURE_CANVAS_HEIGHT as HEIGHT,
 } from "../../../components/DataStructureCanvas";
-import { MAX_RADIUS } from "./constants";
 import { Circle } from "../../../components/Svg/Shapes/Circle";
 import type { Coordinate } from "../../../types";
-//
+
 interface TreeMetadata {
   maxDepth: number;
   numberOfMembers: number;
@@ -202,27 +201,92 @@ const toCoordinates = (
 };
 
 const toArrows = (
-  tree: IBinarySearchNode<{ coordinate: Coordinate; text: string }> | null,
+  tree: IBinarySearchNode<{
+    coordinate: Coordinate;
+    radius: number;
+    text: string;
+  }> | null,
 ): { start: Coordinate; end: Coordinate }[] => {
   const arrows: { start: Coordinate; end: Coordinate }[] = [];
 
   const traverse = (
-    node: IBinarySearchNode<{ coordinate: Coordinate; text: string }> | null,
+    node: IBinarySearchNode<{
+      coordinate: Coordinate;
+      radius: number;
+      text: string;
+    }> | null,
   ): void => {
     if (!node) {
       return;
     }
 
+    const spaceFromCenterOfNode = node.value.radius * 1.2;
+
     if (node.left) {
+      const horizontalDistanceBetweenCoordinates = Math.abs(
+        node.value.coordinate[0] - node.left.value.coordinate[0],
+      );
+      const verticalDistanceBetweenCoordinates = Math.abs(
+        node.value.coordinate[1] - node.left.value.coordinate[1],
+      );
+      const distanceBetweenCoordinates = Math.sqrt(
+        horizontalDistanceBetweenCoordinates ** 2 +
+          verticalDistanceBetweenCoordinates ** 2,
+      );
+
+      const lowerAngle = Math.tanh(
+        verticalDistanceBetweenCoordinates /
+          horizontalDistanceBetweenCoordinates,
+      );
+
       arrows.push({
-        start: node.value.coordinate,
-        end: node.left.value.coordinate,
+        start: [
+          node.left.value.coordinate[0] +
+            Math.cos(lowerAngle) *
+              (distanceBetweenCoordinates - spaceFromCenterOfNode),
+          node.left.value.coordinate[1] -
+            Math.sin(lowerAngle) *
+              (distanceBetweenCoordinates - spaceFromCenterOfNode),
+        ],
+        end: [
+          node.left.value.coordinate[0] +
+            Math.cos(lowerAngle) * spaceFromCenterOfNode,
+          node.left.value.coordinate[1] -
+            Math.sin(lowerAngle) * spaceFromCenterOfNode,
+        ],
       });
     }
     if (node.right) {
+      const horizontalDistanceBetweenCoordinates = Math.abs(
+        node.value.coordinate[0] - node.right.value.coordinate[0],
+      );
+      const verticalDistanceBetweenCoordinates = Math.abs(
+        node.value.coordinate[1] - node.right.value.coordinate[1],
+      );
+      const distanceBetweenCoordinates = Math.sqrt(
+        horizontalDistanceBetweenCoordinates ** 2 +
+          verticalDistanceBetweenCoordinates ** 2,
+      );
+
+      const lowerAngle = Math.tanh(
+        verticalDistanceBetweenCoordinates /
+          horizontalDistanceBetweenCoordinates,
+      );
       arrows.push({
-        start: node.value.coordinate,
-        end: node.right.value.coordinate,
+        start: [
+          node.right.value.coordinate[0] -
+            Math.cos(lowerAngle) *
+              (distanceBetweenCoordinates - spaceFromCenterOfNode),
+          node.right.value.coordinate[1] -
+            Math.sin(lowerAngle) *
+              (distanceBetweenCoordinates - spaceFromCenterOfNode),
+        ],
+        end: [
+          node.right.value.coordinate[0] -
+            Math.cos(lowerAngle) * spaceFromCenterOfNode,
+          node.right.value.coordinate[1] -
+            Math.sin(lowerAngle) * spaceFromCenterOfNode,
+        ],
       });
     }
 
@@ -244,60 +308,25 @@ export const BinarySearchTreeViewer = () => {
   const coordinates = toCoordinates(coordinateTree);
   const arrows = toArrows(coordinateTree);
 
-  // const { heap } = useContext(BinarySearchTreeContext);
-  //
-  // const maxLongestHeapRow = 2 ** (heap.members.length - 1);
-  // const proportionalRadius = (WIDTH / (2 * maxLongestHeapRow)) * 0.8;
-  //
-  // const radius = Math.min(proportionalRadius, MAX_RADIUS);
-  //
-  // const verticalUnit = HEIGHT / (heap.members.length + 1);
-  // const horizontalUnitFromCenter = Math.min(
-  //   WIDTH / (2 * maxLongestHeapRow),
-  //   verticalUnit / Math.tan(Math.PI / 3),
-  // );
-  //
-  // const circleHeap: CircleProps[][] = heap.members.map((row, i) =>
-  //   row.map((value, j) => ({
-  //     center: [
-  //       WIDTH / 2 +
-  //         ((1 + 2 * j - 2 ** i) / 2 ** i) *
-  //           horizontalUnitFromCenter *
-  //           maxLongestHeapRow,
-  //       (i + 1) * verticalUnit,
-  //     ],
-  //     radius,
-  //     text: value.toString(),
-  //   })),
-  // );
-  //
-  // const arrows: ArrowProps[] = circleHeap.reduce<ArrowProps[]>(
-  //   (accumulator, circleRow, i) => {
-  //     if (i === 0) {
-  //       return accumulator;
-  //     }
-  //
-  //     circleRow.forEach((childCircle, j) => {
-  //       const parentCircle = circleHeap[i - 1][Math.floor(j / 2)];
-  //       accumulator.push({
-  //         start: parentCircle.center,
-  //         end: childCircle.center,
-  //         strokeWidth: 8,
-  //       });
-  //     });
-  //
-  //     return accumulator;
-  //   },
-  //   [],
-  // );
+  const horizontalGap = toHorizontalGaps(
+    treeWithMetadata.metadata.numberOfMembers,
+  );
+  const verticalGap = toVerticalGaps(treeWithMetadata.metadata.maxDepth);
+
+  const proportionalRadius =
+    Math.sqrt(horizontalGap ** 2 + verticalGap ** 2) / 4;
+
+  const smallestLength =
+    Math.sqrt(horizontalGap ** 2 + verticalGap ** 2) - 2 * proportionalRadius;
+  const strokeWidth = Math.sqrt(smallestLength) / 1.3;
+
   return (
     <DataStructureCanvas>
       {arrows.map((props, i) => (
-        <Arrow key={i} {...props} />
+        <Arrow key={i} {...props} endPointer strokeWidth={strokeWidth} />
       ))}
 
       {coordinates.map(({ coordinate, radius, text }) => {
-        // const radius = MAX_RADIUS;
         return (
           <Circle
             key={JSON.stringify(coordinate)}
