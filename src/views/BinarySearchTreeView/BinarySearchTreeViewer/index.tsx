@@ -9,6 +9,10 @@ import {
 } from "../../../components/DataStructureCanvas";
 import { Circle } from "../../../components/Svg/Shapes/Circle";
 import type { Coordinate } from "../../../types";
+import {
+  calculateDistance,
+  calculateVectorAngle,
+} from "../../../components/Svg/util";
 
 interface TreeMetadata {
   maxDepth: number;
@@ -223,25 +227,19 @@ const toArrows = (
     const spaceFromCenterOfNode = node.value.radius * 1.2;
 
     if (node.left) {
-      const horizontalDistanceBetweenCoordinates = Math.abs(
-        node.value.coordinate[0] - node.left.value.coordinate[0],
-      );
-      const verticalDistanceBetweenCoordinates = Math.abs(
-        node.value.coordinate[1] - node.left.value.coordinate[1],
-      );
-      const distanceBetweenCoordinates = Math.sqrt(
-        horizontalDistanceBetweenCoordinates ** 2 +
-          verticalDistanceBetweenCoordinates ** 2,
+      const distanceBetweenCoordinates = calculateDistance(
+        node.left.value.coordinate,
+        node.value.coordinate,
       );
 
-      const lowerAngle = Math.tanh(
-        verticalDistanceBetweenCoordinates /
-          horizontalDistanceBetweenCoordinates,
+      const lowerAngle = calculateVectorAngle(
+        node.value.coordinate,
+        node.left.value.coordinate,
       );
 
       arrows.push({
         start: [
-          node.left.value.coordinate[0] +
+          node.left.value.coordinate[0] -
             Math.cos(lowerAngle) *
               (distanceBetweenCoordinates - spaceFromCenterOfNode),
           node.left.value.coordinate[1] -
@@ -249,7 +247,7 @@ const toArrows = (
               (distanceBetweenCoordinates - spaceFromCenterOfNode),
         ],
         end: [
-          node.left.value.coordinate[0] +
+          node.left.value.coordinate[0] -
             Math.cos(lowerAngle) * spaceFromCenterOfNode,
           node.left.value.coordinate[1] -
             Math.sin(lowerAngle) * spaceFromCenterOfNode,
@@ -257,21 +255,16 @@ const toArrows = (
       });
     }
     if (node.right) {
-      const horizontalDistanceBetweenCoordinates = Math.abs(
-        node.value.coordinate[0] - node.right.value.coordinate[0],
-      );
-      const verticalDistanceBetweenCoordinates = Math.abs(
-        node.value.coordinate[1] - node.right.value.coordinate[1],
-      );
-      const distanceBetweenCoordinates = Math.sqrt(
-        horizontalDistanceBetweenCoordinates ** 2 +
-          verticalDistanceBetweenCoordinates ** 2,
+      const distanceBetweenCoordinates = calculateDistance(
+        node.value.coordinate,
+        node.right.value.coordinate,
       );
 
-      const lowerAngle = Math.tanh(
-        verticalDistanceBetweenCoordinates /
-          horizontalDistanceBetweenCoordinates,
+      const lowerAngle = calculateVectorAngle(
+        node.value.coordinate,
+        node.right.value.coordinate,
       );
+
       arrows.push({
         start: [
           node.right.value.coordinate[0] -
