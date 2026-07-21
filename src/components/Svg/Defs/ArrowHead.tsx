@@ -1,19 +1,19 @@
 export const ArrowHead = () => (
   <marker
     id={ARROW_HEAD_DEF_ID}
-    viewBox={`0 0 ${ARROW_HEAD_LENGTH} ${ARROW_HEAD_LENGTH}`}
-    refX={(ARROW_HEAD_LENGTH / 2).toString()}
-    refY={(ARROW_HEAD_LENGTH / 2).toString()}
-    markerWidth={(ARROW_HEAD_LENGTH / 2).toString()}
-    markerHeight={(ARROW_HEAD_LENGTH / 2).toString()}
+    viewBox={`0 0 ${ARROW_VIEWBOX_WIDTH} ${ARROW_VIEWBOX_WIDTH}`}
+    refX={(ARROW_VIEWBOX_WIDTH / 2).toString()}
+    refY={(ARROW_VIEWBOX_WIDTH / 2).toString()}
+    markerWidth={ARROW_MARKER_WIDTH.toString()}
+    markerHeight={ARROW_MARKER_WIDTH.toString()}
     orient="auto-start-reverse"
   >
     <path
       className="fill-black stroke-black"
       d={[
         "M 0 0",
-        `L ${ARROW_HEAD_LENGTH} ${ARROW_HEAD_LENGTH / 2}`,
-        `L 0 ${ARROW_HEAD_LENGTH}`,
+        `L ${ARROW_VIEWBOX_WIDTH} ${ARROW_VIEWBOX_WIDTH / 2}`,
+        `L 0 ${ARROW_VIEWBOX_WIDTH}`,
         "z",
       ].join(" ")}
     />
@@ -23,4 +23,8 @@ export const ArrowHead = () => (
 export const ARROW_HEAD_DEF_ID = "arrow";
 export const ARROW_HEAD_REF = `url(#${ARROW_HEAD_DEF_ID})`;
 
-export const ARROW_HEAD_LENGTH = 8;
+const ARROW_VIEWBOX_WIDTH = 16;
+const ARROW_MARKER_WIDTH = ARROW_VIEWBOX_WIDTH / 4;
+
+export const getArrowHeadLength = (strokeWidth: number) =>
+  (strokeWidth * ARROW_MARKER_WIDTH) / 2;
