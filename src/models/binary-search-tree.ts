@@ -1,3 +1,5 @@
+import { Stack } from "./stack";
+
 export class BinarySearchTree {
   private root: BinarySearchNode | null;
 
@@ -24,21 +26,18 @@ export class BinarySearchTree {
   }
 
   get orderedValues(): number[] {
-    const allValues: number[] = [];
+    if (!this.root) {
+      return [];
+    }
 
-    const traverseNodes = (nodeOrNull: BinarySearchNode | null): void => {
-      if (!nodeOrNull) {
-        return;
-      }
-
-      traverseNodes(nodeOrNull.left);
-      allValues.push(nodeOrNull.value);
-      traverseNodes(nodeOrNull.right);
-    };
-
-    traverseNodes(this.root);
-
-    return allValues;
+    return BinarySearchNode.foldLeft<number, number[]>(
+      this.root,
+      (allValues, node) => {
+        allValues.push(node.value);
+        return allValues;
+      },
+      [],
+    );
   }
 
   static fromContents(contents: IBinarySearchNode | null): BinarySearchTree {
@@ -187,7 +186,7 @@ export interface IBinarySearchNode<T = number> {
   right: IBinarySearchNode<T> | null;
 }
 
-class BinarySearchNode implements IBinarySearchNode {
+export class BinarySearchNode implements IBinarySearchNode {
   public value: number;
   public left: BinarySearchNode | null;
   public right: BinarySearchNode | null;
@@ -246,5 +245,93 @@ class BinarySearchNode implements IBinarySearchNode {
         this.right = new BinarySearchNode(value);
       }
     }
+  }
+
+  static foldLeft<T, U>(
+    rootNode: IBinarySearchNode<T>,
+    foldCallback: (
+      accumulator: U,
+      node: IBinarySearchNode<T>,
+      index?: number,
+      depth?: number,
+    ) => U,
+    initialValue: U,
+  ): U {
+    let accumulator = initialValue;
+    let index = 0;
+
+    const parents = new Stack<{
+      node: IBinarySearchNode<T>;
+      isLeftFolded: boolean;
+      isRightFolded: boolean;
+      depth: number;
+    }>([
+      {
+        node: rootNode,
+        isLeftFolded: false,
+        isRightFolded: false,
+        depth: 0,
+      },
+    ]);
+
+    while (parents.size) {
+      const current = parents.pop();
+      if (!current) {
+        throw new Error(
+          "Failed to get current node from Stack with non-zero size",
+        );
+      }
+      if (current.isRightFolded) {
+        continue;
+      }
+
+      if (current.isLeftFolded) {
+        accumulator = foldCallback(
+          accumulator,
+          current.node,
+          index,
+          current.depth,
+        );
+        index++;
+
+        if (!current.node.right) {
+          continue;
+        }
+
+        parents.push({
+          node: current.node,
+          isLeftFolded: true,
+          isRightFolded: true,
+          depth: current.depth,
+        });
+        parents.push({
+          node: current.node.right,
+          isLeftFolded: false,
+          isRightFolded: false,
+          depth: current.depth + 1,
+        });
+        continue;
+      }
+
+      parents.push({
+        node: current.node,
+        isLeftFolded: true,
+        isRightFolded: false,
+        depth: current.depth,
+      });
+
+      if (!current.node.left) {
+        continue;
+      }
+
+      parents.push({
+        node: current.node.left,
+        isLeftFolded: false,
+        isRightFolded: false,
+        depth: current.depth + 1,
+      });
+    }
+
+    return accumulator;
   }
 }

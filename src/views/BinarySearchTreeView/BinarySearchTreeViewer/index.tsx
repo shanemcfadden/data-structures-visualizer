@@ -1,7 +1,10 @@
 import { useContext } from "react";
 import { Arrow } from "../../../components/Svg/Shapes/Arrow";
 import { BinarySearchTreeContext } from "../state/context";
-import type { IBinarySearchNode } from "../../../models/binary-search-tree";
+import {
+  BinarySearchNode,
+  type IBinarySearchNode,
+} from "../../../models/binary-search-tree";
 import {
   DataStructureCanvas,
   DATA_STRUCTURE_CANVAS_WIDTH as WIDTH,
@@ -176,32 +179,21 @@ const toCoordinates = (
     text: string;
   }> | null,
 ): { coordinate: Coordinate; radius: number; text: string }[] => {
-  const coordinates: {
-    coordinate: Coordinate;
-    radius: number;
-    text: string;
-  }[] = [];
+  if (!tree) {
+    return [];
+  }
 
-  const traverse = (
-    node: IBinarySearchNode<{
-      coordinate: Coordinate;
-      radius: number;
-      text: string;
-    }> | null,
-  ): void => {
-    if (!node) {
-      return;
-    }
-
-    coordinates.push(node.value);
-
-    traverse(node.left);
-    traverse(node.right);
-  };
-
-  traverse(tree);
-
-  return coordinates;
+  return BinarySearchNode.foldLeft(
+    tree,
+    (
+      accumulator: { coordinate: Coordinate; radius: number; text: string }[],
+      node,
+    ) => {
+      accumulator.push(node.value);
+      return accumulator;
+    },
+    [],
+  );
 };
 
 const toArrows = (
@@ -211,85 +203,82 @@ const toArrows = (
     text: string;
   }> | null,
 ): { start: Coordinate; end: Coordinate }[] => {
-  const arrows: { start: Coordinate; end: Coordinate }[] = [];
+  if (!tree) {
+    return [];
+  }
 
-  const traverse = (
-    node: IBinarySearchNode<{
+  return BinarySearchNode.foldLeft<
+    {
       coordinate: Coordinate;
       radius: number;
       text: string;
-    }> | null,
-  ): void => {
-    if (!node) {
-      return;
-    }
+    },
+    { start: Coordinate; end: Coordinate }[]
+  >(
+    tree,
+    (arrows, node): { start: Coordinate; end: Coordinate }[] => {
+      const spaceFromCenterOfNode = node.value.radius * 1.2;
 
-    const spaceFromCenterOfNode = node.value.radius * 1.2;
+      if (node.left) {
+        const distanceBetweenCoordinates = calculateDistance(
+          node.left.value.coordinate,
+          node.value.coordinate,
+        );
 
-    if (node.left) {
-      const distanceBetweenCoordinates = calculateDistance(
-        node.left.value.coordinate,
-        node.value.coordinate,
-      );
+        const lowerAngle = calculateVectorAngle(
+          node.value.coordinate,
+          node.left.value.coordinate,
+        );
 
-      const lowerAngle = calculateVectorAngle(
-        node.value.coordinate,
-        node.left.value.coordinate,
-      );
+        arrows.push({
+          start: [
+            node.left.value.coordinate[0] -
+              Math.cos(lowerAngle) *
+                (distanceBetweenCoordinates - spaceFromCenterOfNode),
+            node.left.value.coordinate[1] -
+              Math.sin(lowerAngle) *
+                (distanceBetweenCoordinates - spaceFromCenterOfNode),
+          ],
+          end: [
+            node.left.value.coordinate[0] -
+              Math.cos(lowerAngle) * spaceFromCenterOfNode,
+            node.left.value.coordinate[1] -
+              Math.sin(lowerAngle) * spaceFromCenterOfNode,
+          ],
+        });
+      }
+      if (node.right) {
+        const distanceBetweenCoordinates = calculateDistance(
+          node.value.coordinate,
+          node.right.value.coordinate,
+        );
 
-      arrows.push({
-        start: [
-          node.left.value.coordinate[0] -
-            Math.cos(lowerAngle) *
-              (distanceBetweenCoordinates - spaceFromCenterOfNode),
-          node.left.value.coordinate[1] -
-            Math.sin(lowerAngle) *
-              (distanceBetweenCoordinates - spaceFromCenterOfNode),
-        ],
-        end: [
-          node.left.value.coordinate[0] -
-            Math.cos(lowerAngle) * spaceFromCenterOfNode,
-          node.left.value.coordinate[1] -
-            Math.sin(lowerAngle) * spaceFromCenterOfNode,
-        ],
-      });
-    }
-    if (node.right) {
-      const distanceBetweenCoordinates = calculateDistance(
-        node.value.coordinate,
-        node.right.value.coordinate,
-      );
+        const lowerAngle = calculateVectorAngle(
+          node.value.coordinate,
+          node.right.value.coordinate,
+        );
 
-      const lowerAngle = calculateVectorAngle(
-        node.value.coordinate,
-        node.right.value.coordinate,
-      );
-
-      arrows.push({
-        start: [
-          node.right.value.coordinate[0] -
-            Math.cos(lowerAngle) *
-              (distanceBetweenCoordinates - spaceFromCenterOfNode),
-          node.right.value.coordinate[1] -
-            Math.sin(lowerAngle) *
-              (distanceBetweenCoordinates - spaceFromCenterOfNode),
-        ],
-        end: [
-          node.right.value.coordinate[0] -
-            Math.cos(lowerAngle) * spaceFromCenterOfNode,
-          node.right.value.coordinate[1] -
-            Math.sin(lowerAngle) * spaceFromCenterOfNode,
-        ],
-      });
-    }
-
-    traverse(node.left);
-    traverse(node.right);
-  };
-
-  traverse(tree);
-
-  return arrows;
+        arrows.push({
+          start: [
+            node.right.value.coordinate[0] -
+              Math.cos(lowerAngle) *
+                (distanceBetweenCoordinates - spaceFromCenterOfNode),
+            node.right.value.coordinate[1] -
+              Math.sin(lowerAngle) *
+                (distanceBetweenCoordinates - spaceFromCenterOfNode),
+          ],
+          end: [
+            node.right.value.coordinate[0] -
+              Math.cos(lowerAngle) * spaceFromCenterOfNode,
+            node.right.value.coordinate[1] -
+              Math.sin(lowerAngle) * spaceFromCenterOfNode,
+          ],
+        });
+      }
+      return arrows;
+    },
+    [],
+  );
 };
 
 export const BinarySearchTreeViewer = () => {
