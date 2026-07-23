@@ -35,7 +35,7 @@ export const Delete = () => {
 
   return (
     <Action
-      data-cy="binary-heap-method-delete"
+      data-cy="binary-search-tree-method-delete"
       disabled={tree.orderedValues.length === 0}
       input
       inputMode="numeric"
