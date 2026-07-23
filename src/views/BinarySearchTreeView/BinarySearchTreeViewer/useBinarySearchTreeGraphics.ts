@@ -1,4 +1,7 @@
-import type { ArrowProps } from "../../../components/Svg/Shapes/Arrow";
+import {
+  calculateDefaultStrokeWidth,
+  type ArrowProps,
+} from "../../../components/Svg/Shapes/Arrow";
 import type { CircleProps } from "../../../components/Svg/Shapes/Circle";
 import {
   BinarySearchNode,
@@ -11,13 +14,14 @@ import {
   DATA_STRUCTURE_CANVAS_HEIGHT as HEIGHT,
 } from "../../../components/DataStructureCanvas";
 import { useMemo } from "react";
-import { calculateVectorAngle } from "../../../components/Svg/util";
-
-type ArrowEndpoint = Pick<ArrowProps, "start" | "end">;
+import {
+  calculateDistance,
+  calculateVectorAngle,
+} from "../../../components/Svg/util";
 
 export const useBinarySearchTreeGraphics = (): {
   circles: CircleProps[];
-  arrows: ArrowEndpoint[];
+  arrows: ArrowProps[];
 } => {
   const treeWithMetadata = useTreeWithMetadata();
 
@@ -27,7 +31,7 @@ export const useBinarySearchTreeGraphics = (): {
   );
 
   const circles = useMemo(() => toCircles(circlesTree), [circlesTree]);
-  const arrows = useMemo(() => toArrowEndpoints(circlesTree), [circlesTree]);
+  const arrows = useMemo(() => toArrows(circlesTree), [circlesTree]);
 
   return { circles, arrows };
 };
@@ -87,35 +91,45 @@ const toCircles = (
   );
 };
 
-type ArrowEndpoints = Pick<ArrowProps, "start" | "end">;
-
-const toArrowEndpoints = (
+const toArrows = (
   tree: IBinarySearchNode<CircleProps> | null,
-): ArrowEndpoint[] => {
+): ArrowProps[] => {
   if (!tree) {
     return [];
   }
 
-  return BinarySearchNode.foldLeft<CircleProps, ArrowEndpoints[]>(
+  const endpoints = BinarySearchNode.foldLeft<CircleProps, ArrowEndpoints[]>(
     tree,
     (arrows, node) => {
       if (node.left) {
-        arrows.push(toArrowEndpoint(node.value, node.left.value));
+        arrows.push(toArrowEndpoints(node.value, node.left.value));
       }
       if (node.right) {
-        arrows.push(toArrowEndpoint(node.value, node.right.value));
+        arrows.push(toArrowEndpoints(node.value, node.right.value));
       }
 
       return arrows;
     },
     [],
   );
+
+  const shortestArrow = Math.min(
+    ...endpoints.map(({ start, end }) => calculateDistance(start, end)),
+  );
+
+  return endpoints.map(({ start, end }) => ({
+    start,
+    end,
+    endPointer: true,
+    strokeWidth: calculateDefaultStrokeWidth(shortestArrow),
+  }));
 };
 
-const toArrowEndpoint = (
+type ArrowEndpoints = Pick<ArrowProps, "start" | "end">;
+const toArrowEndpoints = (
   startNodeCircle: CircleProps,
   endNodeCircle: CircleProps,
-): ArrowEndpoint => {
+): Pick<ArrowProps, "start" | "end"> => {
   const arrowAngle = calculateVectorAngle(
     startNodeCircle.center,
     endNodeCircle.center,
