@@ -16,6 +16,7 @@ import {
 import { useMemo } from "react";
 import {
   calculateDistance,
+  calculateLengthFromOffsets,
   calculateVectorAngle,
 } from "../../../components/Svg/util";
 import { MAX_RADIUS } from "./constants";
@@ -37,10 +38,10 @@ export const useBinarySearchTreeGraphics = (): {
   return { circles, arrows };
 };
 
-const calculateNumberOfHorizontalIntervals = (numberOfMembers: number) =>
+const calculateHorizontalIntervalWidth = (numberOfMembers: number) =>
   WIDTH / (numberOfMembers + 1);
 
-const calculateNumberOfVerticalIntervals = (maxDepth: number) =>
+const calculateVerticalIntervalHeight = (maxDepth: number) =>
   HEIGHT / (maxDepth + 2);
 
 const toCirclesTree = ({
@@ -51,22 +52,24 @@ const toCirclesTree = ({
     return null;
   }
 
-  const numberOfHorizontalIntervals = calculateNumberOfHorizontalIntervals(
+  const horizontalIntervalWidth = calculateHorizontalIntervalWidth(
     metadata.numberOfMembers,
   );
-  const numberofVerticalIntervals = calculateNumberOfVerticalIntervals(
+  const verticalIntervalHeight = calculateVerticalIntervalHeight(
     metadata.maxDepth,
   );
 
-  const proportionalRadius =
-    Math.sqrt(
-      numberOfHorizontalIntervals ** 2 + numberofVerticalIntervals ** 2,
+  const radiusProportionalToGrid =
+    calculateLengthFromOffsets(
+      horizontalIntervalWidth,
+      verticalIntervalHeight,
     ) / 4;
-  const radius = Math.min(MAX_RADIUS, proportionalRadius);
+
+  const radius = Math.min(MAX_RADIUS, radiusProportionalToGrid);
 
   return BinarySearchNode.map(tree, (value) => {
-    const x = (value.horizontalIndex + 1) * numberOfHorizontalIntervals;
-    const y = (value.depth + 1) * numberofVerticalIntervals;
+    const x = (value.horizontalIndex + 1) * horizontalIntervalWidth;
+    const y = (value.depth + 1) * verticalIntervalHeight;
 
     return {
       center: [x, y],
