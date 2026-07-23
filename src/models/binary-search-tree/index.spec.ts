@@ -105,6 +105,20 @@ describe("binary search tree", () => {
         }),
       );
     });
+    it("increases the size by one each insert", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer()), (array) => {
+          const tree = new BinarySearchTree();
+
+          expect(tree.size).toBe(0);
+
+          array.forEach((member, index) => {
+            tree.insert(member);
+            expect(tree.size).toBe(index + 1);
+          });
+        }),
+      );
+    });
   });
 
   describe("has", () => {
@@ -173,6 +187,23 @@ describe("binary search tree", () => {
         }),
       );
     });
+    it("lowers size by 1 when the deleted value exists", () => {
+      fc.assert(
+        fc.property(fc.array(fc.integer(), { minLength: 1 }), (array) => {
+          const tree = new BinarySearchTree();
+
+          array.forEach((member) => {
+            tree.insert(member);
+          });
+
+          const [valueToDelete, ...remainingValues] = array;
+
+          tree.delete(valueToDelete);
+
+          expect(tree.size).toBe(remainingValues.length);
+        }),
+      );
+    });
     it("yields true when deleted value exists", () => {
       fc.assert(
         fc.property(fc.array(fc.integer(), { minLength: 1 }), (array) => {
@@ -236,6 +267,25 @@ describe("binary search tree", () => {
 
           const updatedNumberOfContents = tree.orderedValues.length;
           expect(initialNumberOfContents).toBe(updatedNumberOfContents);
+        }),
+      );
+    });
+    it("does not change size when value does not exist", () => {
+      fc.assert(
+        fc.property(fc.uniqueArray(fc.integer(), { minLength: 2 }), (array) => {
+          const tree = new BinarySearchTree();
+
+          const [valueToOmit, ...valuesToAdd] = array;
+          valuesToAdd.forEach((member) => {
+            tree.insert(member);
+          });
+
+          const initialSize = tree.size;
+
+          tree.delete(valueToOmit);
+
+          const updatedSize = tree.size;
+          expect(initialSize).toBe(updatedSize);
         }),
       );
     });

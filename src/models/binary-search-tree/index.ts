@@ -2,9 +2,11 @@ import { BinarySearchNode, type IBinarySearchNode } from "./binary-search-node";
 
 export class BinarySearchTree {
   private root: BinarySearchNode | null;
+  public size: number;
 
   constructor() {
     this.root = null;
+    this.size = 0;
   }
 
   get contents(): IBinarySearchNode | null {
@@ -68,6 +70,8 @@ export class BinarySearchTree {
     } else {
       this.root.insert(value);
     }
+
+    this.size++;
   }
 
   public has(value: number): boolean {
@@ -117,6 +121,8 @@ export class BinarySearchTree {
         replaceNodeToDelete(minimumChildOfRight);
       }
     }
+
+    this.size--;
     return true;
   }
 
