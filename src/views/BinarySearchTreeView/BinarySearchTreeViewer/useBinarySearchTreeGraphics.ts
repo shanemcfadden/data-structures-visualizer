@@ -6,7 +6,7 @@ import type { CircleProps } from "../../../components/Svg/Shapes/Circle";
 import {
   BinarySearchNode,
   type IBinarySearchNode,
-} from "../../../models/binary-search-tree";
+} from "../../../models/binary-search-tree/binary-search-node";
 import type { TreeWithMetadata } from "./types";
 import { useTreeWithMetadata } from "./useTreeWithMetadata";
 import {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import fc from "fast-check";
-import { BinarySearchTree } from "./binary-search-tree";
+import { BinarySearchTree } from "./index";
 
 describe("binary search tree", () => {
   describe("clone", () => {

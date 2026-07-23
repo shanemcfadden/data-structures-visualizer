@@ -2,7 +2,7 @@ import { useContext, useMemo } from "react";
 import {
   BinarySearchNode,
   type IBinarySearchNode,
-} from "../../../models/binary-search-tree";
+} from "../../../models/binary-search-tree/binary-search-node";
 import { BinarySearchTreeContext } from "../state/context";
 import type { TreeWithMetadata } from "./types";
 

@@ -1,4 +1,4 @@
-import type { IBinarySearchNode } from "../../../models/binary-search-tree";
+import type { IBinarySearchNode } from "../../../models/binary-search-tree/binary-search-node";
 
 export interface TreeWithMetadata {
   metadata: TreeMetadata;
