@@ -15,8 +15,7 @@ export const DataStructureDashboard = ({
   modelPath,
   Properties,
   wikiSlug,
-}: DataStructureDashboardProps) => {
-  return (
+}: DataStructureDashboardProps) => (
     <Margin>
       <div className="sm:hidden">
         {Properties && <Properties />}
@@ -36,4 +35,3 @@ export const DataStructureDashboard = ({
       </div>
     </Margin>
   );
-};

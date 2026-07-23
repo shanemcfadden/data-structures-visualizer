@@ -12,6 +12,14 @@ const eslintConfig = defineConfig([
     rules: {
       "arrow-body-style": ["error", "as-needed"],
       curly: ["error", "all"],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          varsIgnorePattern: "^_",
+          argsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
     },
   },
 ]);
