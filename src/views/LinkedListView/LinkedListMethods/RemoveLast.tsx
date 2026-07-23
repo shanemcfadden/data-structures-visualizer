@@ -16,9 +16,12 @@ export const RemoveLast = () => {
   );
 
   const result = useMemo(() => {
+    const label = "Removed";
+
     if (actionResult?.type === "REMOVE_LAST") {
-      return nullableNumberToString(actionResult.value);
+      return { label, value: nullableNumberToString(actionResult.value) };
     }
+    return { label };
   }, [actionResult]);
 
   return (
@@ -28,7 +31,6 @@ export const RemoveLast = () => {
       label="Remove Last"
       onButtonClick={onClick}
       result={result}
-      resultLabel="Removed"
     />
   );
 };

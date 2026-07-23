@@ -16,9 +16,13 @@ export const Pop = () => {
   );
 
   const result = useMemo(() => {
+    const label = "Popped";
+
     if (stack.actionResult?.type === "POP") {
-      return nullableNumberToString(stack.actionResult.value);
+      return { label, value: nullableNumberToString(stack.actionResult.value) };
     }
+
+    return { label };
   }, [stack]);
 
   return (
@@ -28,7 +32,6 @@ export const Pop = () => {
       label="Pop"
       onButtonClick={onButtonClick}
       result={result}
-      resultLabel="Popped"
     />
   );
 };

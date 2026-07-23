@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { joinClassNames } from "../../util";
 import { NAVIGATION_LINKS } from "../../constants";
 import { Heading } from "../Heading";
-import { NavigationSidebarLink } from "./NavigationSidbarLink";
+import { NavigationSidebarLink } from "./NavigationSidebarLink";
 import { NavigationSidebarContext } from "./NavigationSidebarContext";
 import { NavigationSidebarOverlay } from "./NavigationSidebarOverlay";
 

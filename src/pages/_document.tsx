@@ -2,7 +2,7 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   const prependBasePath = (path: string) =>
-    process.env.NEXT_PUBLIC_BASE_PATH + path;
+    (process.env.NEXT_PUBLIC_BASE_PATH || "") + path;
 
   return (
     <Html lang="en">

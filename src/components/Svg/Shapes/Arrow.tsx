@@ -1,5 +1,6 @@
 import type { Coordinate } from "../../../types";
-import { ARROW_HEAD_LENGTH, ARROW_HEAD_REF } from "../Defs/ArrowHead";
+import { ARROW_HEAD_REF, getArrowHeadLength } from "../Defs/ArrowHead";
+import { calculateDistance, calculateVectorAngle } from "../util";
 
 export type ArrowProps = {
   start: Coordinate;
@@ -8,24 +9,37 @@ export type ArrowProps = {
   strokeWidth?: number;
 };
 
-export const Arrow = ({
-  start: [x1, y1],
-  end: [x2, y2],
-  endPointer = false,
-  strokeWidth,
-}: ArrowProps) => {
-  const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+export const calculateDefaultStrokeWidth = (lineLength: number) =>
+  Math.sqrt(lineLength) / 1.3;
 
-  const autoStrokeWidth = Math.sqrt(length) / 1.3;
+export const Arrow = ({
+  start,
+  end,
+  endPointer = false,
+  strokeWidth: customStrokeWidth,
+}: ArrowProps) => {
+  const [x1, y1] = start;
+
+  const vectorAngle = calculateVectorAngle(start, end);
+  const length = calculateDistance(start, end);
+
+  const autoStrokeWidth = calculateDefaultStrokeWidth(length);
+  const strokeWidth = customStrokeWidth ?? autoStrokeWidth;
+
+  const adjustedLength =
+    length - (endPointer ? getArrowHeadLength(strokeWidth) : 0);
+
+  const calculatedX2 = x1 + Math.cos(vectorAngle) * adjustedLength;
+  const calculatedY2 = y1 + Math.sin(vectorAngle) * adjustedLength;
 
   return (
     <line
       className="stroke-black"
       x1={x1}
-      x2={endPointer ? x2 - ARROW_HEAD_LENGTH : x2}
+      x2={calculatedX2}
       y1={y1}
-      y2={y2}
-      strokeWidth={strokeWidth ?? autoStrokeWidth}
+      y2={calculatedY2}
+      strokeWidth={strokeWidth}
       markerEnd={endPointer ? ARROW_HEAD_REF : "none"}
     />
   );
