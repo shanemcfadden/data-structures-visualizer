@@ -1,4 +1,5 @@
 import { cloneDeep } from "lodash-es";
+import { sortAscending } from "../util";
 
 class BinaryHeap<T = number> {
   private readonly array: T[] = [];
@@ -129,7 +130,7 @@ class BinaryHeap<T = number> {
 
 export class MinHeap extends BinaryHeap<number> {
   constructor() {
-    super((a: number, b: number) => a - b);
+    super(sortAscending);
   }
 }
 

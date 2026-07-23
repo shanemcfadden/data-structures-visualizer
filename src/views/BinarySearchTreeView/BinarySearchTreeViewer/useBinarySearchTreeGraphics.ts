@@ -18,6 +18,7 @@ import {
   calculateDistance,
   calculateVectorAngle,
 } from "../../../components/Svg/util";
+import { MAX_RADIUS } from "./constants";
 
 export const useBinarySearchTreeGraphics = (): {
   circles: CircleProps[];
@@ -61,6 +62,7 @@ const toCirclesTree = ({
     Math.sqrt(
       numberOfHorizontalIntervals ** 2 + numberofVerticalIntervals ** 2,
     ) / 4;
+  const radius = Math.min(MAX_RADIUS, proportionalRadius);
 
   return BinarySearchNode.map(tree, (value) => {
     const x = (value.horizontalIndex + 1) * numberOfHorizontalIntervals;
@@ -68,7 +70,7 @@ const toCirclesTree = ({
 
     return {
       center: [x, y],
-      radius: proportionalRadius,
+      radius,
       text: value.value.toString(),
     };
   });
@@ -116,12 +118,13 @@ const toArrows = (
   const shortestArrow = Math.min(
     ...endpoints.map(({ start, end }) => calculateDistance(start, end)),
   );
+  const strokeWidth = calculateDefaultStrokeWidth(shortestArrow);
 
   return endpoints.map(({ start, end }) => ({
     start,
     end,
     endPointer: true,
-    strokeWidth: calculateDefaultStrokeWidth(shortestArrow),
+    strokeWidth,
   }));
 };
 

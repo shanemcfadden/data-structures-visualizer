@@ -88,9 +88,7 @@ export class BinarySearchTree {
     const { node: nodeToDelete, replaceNode: replaceNodeToDelete } =
       nodeToDeleteAndNodeSetter;
 
-    if (nodeToDelete.isLeaf) {
-      replaceNodeToDelete(null);
-    } else if (!nodeToDelete.left) {
+    if (!nodeToDelete.left) {
       replaceNodeToDelete(nodeToDelete.right);
     } else if (!nodeToDelete.right) {
       replaceNodeToDelete(nodeToDelete.left);

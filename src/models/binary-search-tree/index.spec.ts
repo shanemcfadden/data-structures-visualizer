@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import fc from "fast-check";
 import { BinarySearchTree } from "./index";
+import { sortAscending } from "../../util";
 
 describe("binary search tree", () => {
   describe("clone", () => {
@@ -99,7 +100,7 @@ describe("binary search tree", () => {
             tree.insert(member);
           });
 
-          array.sort((a, b) => a - b);
+          array.sort(sortAscending);
 
           expect(tree.orderedValues).toEqual(array);
         }),
@@ -231,7 +232,7 @@ describe("binary search tree", () => {
 
           tree.delete(valueToDelete);
 
-          remainingValues.sort((a, b) => a - b);
+          remainingValues.sort(sortAscending);
           expect(tree.orderedValues).toEqual(remainingValues);
         }),
       );

@@ -13,3 +13,5 @@ export const joinClassNames = (...classes: string[]) => classes.join(" ");
 
 export const nullableNumberToString = (number: number | null): string =>
   number === null ? "null" : number.toString();
+
+export const sortAscending = (a: number, b: number): number => a - b;

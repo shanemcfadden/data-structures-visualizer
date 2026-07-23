@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import fc from "fast-check";
 import { MinHeap } from "./heap";
+import { sortAscending } from "../util";
 
 describe("heap", () => {
   it("initializes with a size of 0", () => {
@@ -243,7 +244,7 @@ describe("heap", () => {
             heap.insert(member);
           });
 
-          array.sort((a, b) => a - b);
+          array.sort(sortAscending);
 
           array.forEach((member) => {
             const extractedResult = heap.extract();

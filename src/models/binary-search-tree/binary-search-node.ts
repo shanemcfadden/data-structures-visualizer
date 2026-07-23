@@ -18,10 +18,6 @@ export class BinarySearchNode implements IBinarySearchNode {
     this.right = null;
   }
 
-  get isLeaf() {
-    return this.left === null && this.right === null;
-  }
-
   get maxNode(): BinarySearchNode {
     return this.right?.maxNode ?? this;
   }
@@ -77,13 +73,14 @@ export class BinarySearchNode implements IBinarySearchNode {
 
     const parents = new Stack<{
       node: IBinarySearchNode<T>;
-      isLeftFolded: boolean;
-      isRightFolded: boolean;
+      status:
+        | "NO_CHILDREN_FOLDED"
+        | "LEFT_CHILD_FOLDED"
+        | "BOTH_CHILDREN_FOLDED";
     }>([
       {
         node: rootNode,
-        isLeftFolded: false,
-        isRightFolded: false,
+        status: "NO_CHILDREN_FOLDED",
       },
     ]);
 
@@ -94,11 +91,11 @@ export class BinarySearchNode implements IBinarySearchNode {
           "Failed to get current node from Stack with non-zero size",
         );
       }
-      if (current.isRightFolded) {
+      if (current.status === "BOTH_CHILDREN_FOLDED") {
         continue;
       }
 
-      if (current.isLeftFolded) {
+      if (current.status === "LEFT_CHILD_FOLDED") {
         accumulator = folder(accumulator, current.node);
 
         if (!current.node.right) {
@@ -107,21 +104,18 @@ export class BinarySearchNode implements IBinarySearchNode {
 
         parents.push({
           node: current.node,
-          isLeftFolded: true,
-          isRightFolded: true,
+          status: "BOTH_CHILDREN_FOLDED",
         });
         parents.push({
           node: current.node.right,
-          isLeftFolded: false,
-          isRightFolded: false,
+          status: "NO_CHILDREN_FOLDED",
         });
         continue;
       }
 
       parents.push({
         node: current.node,
-        isLeftFolded: true,
-        isRightFolded: false,
+        status: "LEFT_CHILD_FOLDED",
       });
 
       if (!current.node.left) {
@@ -130,8 +124,7 @@ export class BinarySearchNode implements IBinarySearchNode {
 
       parents.push({
         node: current.node.left,
-        isLeftFolded: false,
-        isRightFolded: false,
+        status: "NO_CHILDREN_FOLDED",
       });
     }
 
@@ -142,55 +135,55 @@ export class BinarySearchNode implements IBinarySearchNode {
     rootNode: IBinarySearchNode<T>,
     mapper: (param: T) => U,
   ): IBinarySearchNode<U> {
-    const toMap = new Queue<{
-      originalNode: IBinarySearchNode<T>;
+    const mapQueue = new Queue<{
+      sourceNode: IBinarySearchNode<T>;
       mappedNode: IBinarySearchNode<U>;
     }>();
-    const mappedNodeRoot: IBinarySearchNode<U> = {
+    const mappedRootNode: IBinarySearchNode<U> = {
       value: mapper(rootNode.value),
       left: null,
       right: null,
     };
 
-    toMap.enqueue({
-      originalNode: rootNode,
-      mappedNode: mappedNodeRoot,
+    mapQueue.enqueue({
+      sourceNode: rootNode,
+      mappedNode: mappedRootNode,
     });
 
-    while (toMap.size) {
-      const current = toMap.dequeue();
+    while (mapQueue.size) {
+      const current = mapQueue.dequeue();
       if (!current) {
         throw new Error(
           "Failed to get current node from Queue with non-zero size",
         );
       }
 
-      if (current.originalNode.left) {
+      if (current.sourceNode.left) {
         current.mappedNode.left = {
-          value: mapper(current.originalNode.left.value),
+          value: mapper(current.sourceNode.left.value),
           left: null,
           right: null,
         };
 
-        toMap.enqueue({
-          originalNode: current.originalNode.left,
+        mapQueue.enqueue({
+          sourceNode: current.sourceNode.left,
           mappedNode: current.mappedNode.left,
         });
       }
-      if (current.originalNode.right) {
+      if (current.sourceNode.right) {
         current.mappedNode.right = {
-          value: mapper(current.originalNode.right.value),
+          value: mapper(current.sourceNode.right.value),
           left: null,
           right: null,
         };
 
-        toMap.enqueue({
-          originalNode: current.originalNode.right,
+        mapQueue.enqueue({
+          sourceNode: current.sourceNode.right,
           mappedNode: current.mappedNode.right,
         });
       }
     }
 
-    return mappedNodeRoot;
+    return mappedRootNode;
   }
 }

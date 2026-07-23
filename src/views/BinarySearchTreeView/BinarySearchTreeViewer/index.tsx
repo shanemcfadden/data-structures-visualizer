@@ -12,7 +12,9 @@ export const BinarySearchTreeViewer = () => {
         <Arrow key={i} {...props} />
       ))}
 
-      {circles.map(({ ...props }) => <Circle key={JSON.stringify(props.center)} {...props} />)}
+      {circles.map(({ ...props }) => (
+        <Circle key={JSON.stringify(props.center)} {...props} />
+      ))}
     </DataStructureCanvas>
   );
 };
