@@ -1,3 +1,4 @@
+import { Queue } from "./queue";
 import { Stack } from "./stack";
 
 export class BinarySearchTree {
@@ -333,5 +334,61 @@ export class BinarySearchNode implements IBinarySearchNode {
     }
 
     return accumulator;
+  }
+
+  static map<T, U>(
+    rootNode: IBinarySearchNode<T>,
+    mapper: (param: T) => U,
+  ): IBinarySearchNode<U> {
+    const toMap = new Queue<{
+      originalNode: IBinarySearchNode<T>;
+      mappedNode: IBinarySearchNode<U>;
+    }>();
+    const mappedNodeRoot: IBinarySearchNode<U> = {
+      value: mapper(rootNode.value),
+      left: null,
+      right: null,
+    };
+
+    toMap.enqueue({
+      originalNode: rootNode,
+      mappedNode: mappedNodeRoot,
+    });
+
+    while (toMap.size) {
+      const current = toMap.dequeue();
+      if (!current) {
+        throw new Error(
+          "Failed to get current node from Queue with non-zero size",
+        );
+      }
+
+      if (current.originalNode.left) {
+        current.mappedNode.left = {
+          value: mapper(current.originalNode.left.value),
+          left: null,
+          right: null,
+        };
+
+        toMap.enqueue({
+          originalNode: current.originalNode.left,
+          mappedNode: current.mappedNode.left,
+        });
+      }
+      if (current.originalNode.right) {
+        current.mappedNode.right = {
+          value: mapper(current.originalNode.right.value),
+          left: null,
+          right: null,
+        };
+
+        toMap.enqueue({
+          originalNode: current.originalNode.right,
+          mappedNode: current.mappedNode.right,
+        });
+      }
+    }
+
+    return mappedNodeRoot;
   }
 }

@@ -9,6 +9,9 @@ export type ArrowProps = {
   strokeWidth?: number;
 };
 
+export const calculateDefaultStrokeWidth = (lineLength: number) =>
+  Math.sqrt(lineLength) / 1.3;
+
 export const Arrow = ({
   start,
   end,
@@ -20,7 +23,7 @@ export const Arrow = ({
   const vectorAngle = calculateVectorAngle(start, end);
   const length = calculateDistance(start, end);
 
-  const autoStrokeWidth = Math.sqrt(length) / 1.3;
+  const autoStrokeWidth = calculateDefaultStrokeWidth(length);
   const strokeWidth = customStrokeWidth ?? autoStrokeWidth;
 
   const adjustedLength =
